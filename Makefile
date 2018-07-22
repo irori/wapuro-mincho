@@ -1,10 +1,13 @@
 all: out/jiskan24-2003-1.otf
 
 out/%.otf: bdf/%.bdf out
-	python bdf2otf.py --out $@ $<
+	python converter/bdf2otf.py --out $@ $<
 
 out/%.svg: bdf/%.bdf
-	python bdf2svg.py $< > $@
+	python converter/bdf2svg.py $< > $@
 
 out:
 	mkdir out
+
+test:
+	python -m unittest discover -s converter -p '*_test.py'
