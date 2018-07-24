@@ -42,6 +42,10 @@ class Font:
         self.ascent = (self.bdf['FONT_ASCENT'] + 1) * 10
         self.descent = (self.bdf['FONT_DESCENT'] + 1) * -10
 
+        # For some reasons, IDEOGRAPHIC SPACE in jiskan24-2003-1.bdf is not
+        # really a whitespace. Overwrite it.
+        self.bdf[0x2121].data = map(lambda _: 0, self.bdf[0x2121].data)
+
     def glyphs(self):
         for cp in self.bdf.codepoints():
             unicode = self.codeconv.unicode(cp)

@@ -40,7 +40,16 @@ def generate_otf(font, otf_filename, limit=None):
             print >> sys.stderr, 'Cannot convert unicode sequence %s' % g.unicode
             continue
         ufo_glyph = ufo.newGlyph(g.name())
-        ufo_glyph.unicode = ord(g.unicode)
+
+        # Associate halfwidth characters too
+        u = ord(g.unicode)
+        if u == 0x3000:
+            ufo_glyph.unicodes = [u, 0x20]
+        elif 0xff01 <= u <= 0xff5e:
+            ufo_glyph.unicodes = [u, u - 0xfee0]
+        else:
+            ufo_glyph.unicode = u
+
         ufo_glyph.width = font.width
         draw(g, ufo_glyph)
 
