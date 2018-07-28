@@ -3,10 +3,12 @@ import sys
 from bdflib import reader
 
 from charset import codeconv
-from smoother import Smoother
+from smoother import Smoother, SCALE
 
+MARGIN = 8
 
 class Glyph:
+
     def __init__(self, font, bdf_glyph, unicode):
         self.font = font
         self.bdf_glyph = bdf_glyph
@@ -19,7 +21,7 @@ class Glyph:
         s = Smoother(self._bitmap())
         if smooth:
             s.smooth()
-        return s.vectorize(1, -self.font.bdf['FONT_DESCENT'])
+        return s.vectorize(MARGIN, -self.font.bdf['FONT_DESCENT'] * SCALE)
 
     def _bitmap(self):
         bitmap = []
@@ -38,10 +40,11 @@ class Font:
             self.bdf = reader.read_bdf(f)
         self.codeconv = codeconv(self.bdf['CHARSET_REGISTRY'],
                                  self.bdf['CHARSET_ENCODING'])
-        self.width = (self.bdf[self.bdf['DEFAULT_CHAR']].bbW + 2) * 10
-        self.ascent = (self.bdf['FONT_ASCENT'] + 1) * 10
-        self.descent = (self.bdf['FONT_DESCENT'] + 1) * -10
-        self.xheight = (self._xheight() + 1) * 10
+        self.width = self.bdf[self.bdf['DEFAULT_CHAR']].bbW * SCALE + MARGIN * 2
+        self.capHeight = self.bdf['FONT_ASCENT'] * SCALE
+        self.ascent = self.bdf['FONT_ASCENT'] * SCALE + MARGIN
+        self.descent = self.bdf['FONT_DESCENT'] * SCALE + MARGIN
+        self.xheight = self._xheight() * SCALE
 
         # For some reasons, IDEOGRAPHIC SPACE in jiskan24-2003-1.bdf is not
         # really a whitespace. Overwrite it.

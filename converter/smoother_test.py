@@ -27,7 +27,7 @@ class SmootherTest(unittest.TestCase):
     def test_draw_black(self):
         s = Smoother([[0]])
         pb = PathBuilder()
-        s._draw_black(pb, 2, 3, BLACK)
+        s._draw_black(pb, 20, 30, BLACK)
         pb.optimize()
         self.assertEqual(pb.generate_paths(),
                          [[(20, 30), (30, 30), (30, 40), (20, 40)]])
@@ -44,7 +44,7 @@ class SmootherTest(unittest.TestCase):
     def test_draw_white(self):
         s = Smoother([[0]])
         pb = PathBuilder()
-        s._draw_white(pb, 2, 3, NW)
+        s._draw_white(pb, 20, 30, NW)
         pb.optimize()
         self.assertEqual(pb.generate_paths(),
                          [[(20, 30), (27, 30), (20, 37)]])
@@ -67,7 +67,7 @@ class SmootherTest(unittest.TestCase):
     def test_vectorize_origin(self):
         s = Smoother([[0, 1], [1, 0]])
         s.smooth()
-        self.assertEqual(s.vectorize(1, -1),
+        self.assertEqual(s.vectorize(10, -10),
                          [[(10, 3), (23, -10), (30, -10), (30, -3), (17, 10), (10, 10)]])
 
 

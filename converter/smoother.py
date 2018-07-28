@@ -1,5 +1,7 @@
 from path import PathBuilder, Pen
 
+SCALE = 10
+
 BLACK = 1
 NW = 2 << 0
 NE = 2 << 1
@@ -68,15 +70,13 @@ class Smoother:
             for x in range(self.width):
                 n = self._bmp[y][x]
                 if n & BLACK:
-                    self._draw_black(pb, x + ox, y + oy, n)
+                    self._draw_black(pb, x*10 + ox, y*10 + oy, n)
                 else:
-                    self._draw_white(pb, x + ox, y + oy, n)
+                    self._draw_white(pb, x*10 + ox, y*10 + oy, n)
         pb.optimize()
         return pb.generate_paths()
 
     def _draw_black(self, pb, x, y, n):
-        x = x * 10
-        y = y * 10
         pen = Pen(pb)
         pen.move_to(x + 3, y)
         pen.line_to(x + 7, y)
@@ -97,10 +97,8 @@ class Smoother:
         pen.line_to(x + 3, y)
 
     def _draw_white(self, pb, x, y, n):
-        ox = x * 10
-        oy = y * 10
         def draw(x1, y1, x2, y2):
-            pb.add_segment((ox + x1, oy + y1), (ox + x2, oy + y2))
+            pb.add_segment((x + x1, y + y1), (x + x2, y + y2))
 
         if n & NW:
             draw(0,3, 0,0)
