@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import argparse
+import os
 import sys
 
 import defcon
-from ufo2ft import compileOTF
+from ufo2ft import compileTTF, compileOTF
 
 from font import Font
 
@@ -17,7 +18,7 @@ def draw(glyph, ufo_glyph, smooth=True):
         ufo_glyph.appendContour(contour)
 
 
-def generate_otf(font, otf_filename, limit=None):
+def generate_otf(font, out_filename, limit=None):
     ufo = defcon.Font()
 
     ufo.info.familyName = 'Wapuro Mincho'
@@ -57,13 +58,25 @@ def generate_otf(font, otf_filename, limit=None):
         if limit and count >= limit:
             break
 
-    # ufo.save('out.ufo')
-    ttf = compileOTF(ufo)
+    ext = os.path.splitext(out_filename)[1]
+    if ext == '.ufo':
+        ufo.save(out_filename)
+        return
 
-    ttf['name'].addMultilingualName({'ja': u'ワープロ明朝'}, nameID=1)
-    ttf['name'].addMultilingualName({'ja': u'ワープロ明朝'}, nameID=4)
+    otf = None
+    if ext == '.ttf':
+        otf = compileTTF(ufo)
+    elif ext == '.otf':
+        otf = compileOTF(ufo)
+    elif ext == '.woff2':
+        otf = compileOTF(ufo, optimizeCFF=False)
+        otf.flavor = 'woff2'
+    else:
+        raise RuntimeError('Unknown output file type: %s' % ext)
 
-    ttf.save(otf_filename)
+    otf['name'].addMultilingualName({'ja': u'ワープロ明朝'}, nameID=1)
+    otf['name'].addMultilingualName({'ja': u'ワープロ明朝'}, nameID=4)
+    otf.save(out_filename)
 
 
 if __name__ == '__main__':
