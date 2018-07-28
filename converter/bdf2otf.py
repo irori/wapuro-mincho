@@ -30,7 +30,7 @@ def generate_otf(font, otf_filename, limit=None):
 
     ufo.info.unitsPerEm = font.width
     ufo.info.descender = font.descent
-    ufo.info.xHeight = font.ascent * 4 / 5
+    ufo.info.xHeight = font.xheight
     ufo.info.capHeight = font.ascent
     ufo.info.ascender = font.ascent
 
