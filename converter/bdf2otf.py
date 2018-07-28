@@ -20,9 +20,9 @@ def draw(glyph, ufo_glyph, smooth=True):
 def generate_otf(font, otf_filename, limit=None):
     ufo = defcon.Font()
 
-    ufo.info.familyName = 'Wapuro Moji'
+    ufo.info.familyName = 'Wapuro Mincho'
     ufo.info.styleName = 'Regular'
-    ufo.info.styleMapFamilyName = 'Wapuro Moji'
+    ufo.info.styleMapFamilyName = 'Wapuro Mincho'
     ufo.info.versionMajor = 0
     ufo.info.versionMinor = 1
     ufo.info.copyright = 'Public domain'
@@ -60,8 +60,8 @@ def generate_otf(font, otf_filename, limit=None):
     # ufo.save('out.ufo')
     ttf = compileOTF(ufo)
 
-    ttf['name'].addMultilingualName({'ja': u'ワープロ文字'}, nameID=1)
-    ttf['name'].addMultilingualName({'ja': u'ワープロ文字'}, nameID=4)
+    ttf['name'].addMultilingualName({'ja': u'ワープロ明朝'}, nameID=1)
+    ttf['name'].addMultilingualName({'ja': u'ワープロ明朝'}, nameID=4)
 
     ttf.save(otf_filename)
 
