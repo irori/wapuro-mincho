@@ -14,7 +14,7 @@ class FontTest(unittest.TestCase):
         self.assertEqual(info.unitsPerEm, 256)
         self.assertEqual(info.ascender, 228)
         self.assertEqual(info.descender, -28)
-        self.assertEqual(info.capHeight, 220)
+        self.assertEqual(info.capHeight, 200)
         self.assertEqual(info.xHeight, 140)
 
 

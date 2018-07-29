@@ -52,8 +52,8 @@ class Font:
         info.unitsPerEm = self.width
         info.ascender = self.ascent
         info.descender = self.descent
-        info.capHeight = self.bdf['FONT_ASCENT'] * SCALE
-        info.xHeight = self._xheight() * SCALE
+        info.capHeight = self.bdf[0x2354].get_ascent() * SCALE  # FULLWIDTH LATIN CAPITAL LETTER T
+        info.xHeight = self.bdf[0x2378].get_ascent() * SCALE  # FULLWIDTH LATIN SMALL LETTER X
 
     def glyphs(self):
         for cp in self.bdf.codepoints():
@@ -63,6 +63,3 @@ class Font:
                 print >> sys.stderr, self.bdf[cp]
                 continue
             yield Glyph(self, self.bdf[cp], unicode)
-
-    def _xheight(self):
-        return self.bdf[0x2378].get_ascent()  # FULLWIDTH LATIN SMALL LETTER X
