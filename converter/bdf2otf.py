@@ -29,11 +29,7 @@ def generate_otf(font, out_filename, limit=None):
     ufo.info.copyright = 'Public domain'
     ufo.info.openTypeOS2Type = []  # installable
 
-    ufo.info.unitsPerEm = font.width
-    ufo.info.descender = font.descent
-    ufo.info.xHeight = font.xheight
-    ufo.info.capHeight = font.capHeight
-    ufo.info.ascender = font.ascent
+    font.set_ufo_metrics(ufo.info)
 
     count = 0
     for g in font.glyphs():

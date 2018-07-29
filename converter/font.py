@@ -41,14 +41,19 @@ class Font:
         self.codeconv = codeconv(self.bdf['CHARSET_REGISTRY'],
                                  self.bdf['CHARSET_ENCODING'])
         self.width = self.bdf[self.bdf['DEFAULT_CHAR']].bbW * SCALE + MARGIN * 2
-        self.capHeight = self.bdf['FONT_ASCENT'] * SCALE
         self.ascent = self.bdf['FONT_ASCENT'] * SCALE + MARGIN
-        self.descent = self.bdf['FONT_DESCENT'] * SCALE + MARGIN
-        self.xheight = self._xheight() * SCALE
+        self.descent = -self.bdf['FONT_DESCENT'] * SCALE - MARGIN
 
         # For some reasons, IDEOGRAPHIC SPACE in jiskan24-2003-1.bdf is not
         # really a whitespace. Overwrite it.
         self.bdf[0x2121].data = map(lambda _: 0, self.bdf[0x2121].data)
+
+    def set_ufo_metrics(self, info):
+        info.unitsPerEm = self.width
+        info.ascender = self.ascent
+        info.descender = self.descent
+        info.capHeight = self.bdf['FONT_ASCENT'] * SCALE
+        info.xHeight = self._xheight() * SCALE
 
     def glyphs(self):
         for cp in self.bdf.codepoints():
