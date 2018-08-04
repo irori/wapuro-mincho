@@ -54,6 +54,7 @@ class Font:
         info.descender = self.descent
         info.capHeight = self.bdf[0x2354].get_ascent() * SCALE  # FULLWIDTH LATIN CAPITAL LETTER T
         info.xHeight = self.bdf[0x2378].get_ascent() * SCALE  # FULLWIDTH LATIN SMALL LETTER X
+        info.postscriptIsFixedPitch = True
 
     def glyphs(self):
         for cp in self.bdf.codepoints():
