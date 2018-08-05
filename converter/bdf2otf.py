@@ -24,8 +24,8 @@ def generate_otf(font, out_filename, limit=None):
     ufo.info.familyName = 'Wapuro Mincho'
     ufo.info.styleName = 'Regular'
     ufo.info.styleMapFamilyName = 'Wapuro Mincho'
-    ufo.info.versionMajor = 0
-    ufo.info.versionMinor = 1
+    ufo.info.versionMajor = 1
+    ufo.info.versionMinor = 0
     ufo.info.copyright = 'Public domain'
     ufo.info.openTypeOS2Type = []  # installable
 
