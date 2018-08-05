@@ -54,6 +54,8 @@ def generate_otf(font, out_filename, limit=None):
         if limit and count >= limit:
             break
 
+    print('%d glyphs converted' % count)
+
     ext = os.path.splitext(out_filename)[1]
     if ext == '.ufo':
         ufo.save(out_filename)

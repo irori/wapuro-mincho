@@ -1,19 +1,21 @@
-all: out/jiskan24-2003-1.otf
+all: dist/wapuro-mincho.otf dist/wapuro-mincho.woff2
 
-out/%.otf: bdf/%.bdf out
+SOURCE := bdf/jiskan24-2003-1.bdf
+
+dist/wapuro-mincho.otf: $(SOURCE) dist
 	python converter/bdf2otf.py --out $@ $<
 
-out/%.ttf: bdf/%.bdf out
+dist/wapuro-mincho.ttf: $(SOURCE) dist
 	python converter/bdf2otf.py --out $@ $<
 
-out/%.woff2: bdf/%.bdf out
+dist/wapuro-mincho.woff2: $(SOURCE) dist
 	python converter/bdf2otf.py --out $@ $<
 
-out/%.svg: bdf/%.bdf
+dist/wapuro-mincho.svg: $(SOURCE) dist
 	python converter/bdf2svg.py $< > $@
 
-out:
-	mkdir out
+dist:
+	mkdir dist
 
 test:
 	python -m unittest discover -s converter -p '*_test.py'
