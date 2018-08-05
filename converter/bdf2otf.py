@@ -66,6 +66,9 @@ def generate_otf(font, out_filename, limit=None):
         otf = compileTTF(ufo)
     elif ext == '.otf':
         otf = compileOTF(ufo)
+    elif ext == '.woff':
+        otf = compileOTF(ufo, optimizeCFF=False)
+        otf.flavor = 'woff'
     elif ext == '.woff2':
         otf = compileOTF(ufo, optimizeCFF=False)
         otf.flavor = 'woff2'
