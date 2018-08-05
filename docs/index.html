@@ -19,7 +19,7 @@
 
 body {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 10rem;
 }
 
 h1, h2 {
@@ -54,6 +54,21 @@ h2 {
 dd {
     margin-bottom: 1rem;
 }
+
+.social-buttons {
+    margin-top: 2rem;
+    height: 20px;
+}
+.social {
+    display: inline-block;
+}
+.social.pocket iframe {
+    height: 20px;
+}
+.fb_iframe_widget {
+    overflow: hidden;
+}
+
 </style>
 </head>
 <body>
@@ -97,5 +112,31 @@ dd {
   <dt><a href="http://jikasei.me/font/jf-dotfont/">自家製ドットフォントシリーズ | 自家製フォント工房</a></dt>
   <dd>ワープロ明朝の基になったフォント jiskan24 のドットフォント版を配布されています。</dd>
 </dl>
+
+<div class="social-buttons">
+ <div class="social twitter">
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+ </div>
+ <div class="social facebook">
+  <div class="fb-share-button" data-href="https://irori.github.io/wpfont/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Firori.github.io%2Fwpfont%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+ </div>
+ <div class="social hatena">
+  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-counter" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+ </div>
+ <div class="social pocket">
+  <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a><script type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+ </div>
+</div>
+
+<!-- Facebook JavaScript SDK -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 </body>
 </html>
