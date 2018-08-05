@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<head>
+<meta charset="utf-8" />
+<meta property="og:title" content="ワープロ専用機の拡大処理を再現したフォント「ワープロ明朝」" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://irori.github.io/wpfont/" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:image" content="https://irori.github.io/wpfont/poster.png" />
+<meta property="og:description" content="「ワープロ明朝」は、1980年代～90年代初めのワープロ専用機などで使われていた、ビットマップフォントの拡大処理を再現したフォントです。" />
+<meta name="twitter:card" content="summary_large_image">
+<title>ワープロ専用機の拡大処理を再現したフォント「ワープロ明朝」</title>
+<style>
+@font-face {
+    font-family: "ワープロ明朝";
+    src: url("wapuro-mincho.woff2") format("woff2"),
+         url("wapuro-mincho.woff") format("woff");
+}
+
+body {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    font-family: "ワープロ明朝";
+    font-weight: normal;
+    background-image: radial-gradient(#ccc 30%, transparent 0);
+    background-size: 4px 4px;
+}
+h1 {
+    font-size: 3em;
+    padding: 1rem;
+    font-style: italic;
+}
+h2 {
+    font-size: 2em;
+    padding: 0.5rem;
+    border-left: 0.3rem solid #26a;
+}
+
+.example {
+    border: solid 1px;
+    margin: 0.5rem 5rem 3rem;
+    padding: 2rem;
+    box-shadow: 0.5rem 0.5rem 0.5rem rgba(0,0,0,0.4);
+    font-family: "ワープロ明朝";
+}
+
+.example p {
+    margin: 0;
+}
+
+dd {
+    margin-bottom: 1rem;
+}
+</style>
+</head>
+<body>
+<h1>ワープロ専用機の拡大処理を再現したフォント「ワープロ明朝」</h1>
+<p>「ワープロ明朝」は、1980年代～90年代初めのワープロ専用機などで使われていた、ビットマップフォントの拡大処理を再現したフォントです。</p>
+
+<p>ワープロ専用機も後期にはアウトラインフォントが搭載されて綺麗な拡大が可能になりましたが、それ以前は大きな文字を印刷するときにもビットマップフォントを拡大して使っていました。そのまま拡大するとギザギザになってしまうので、階段状になったドットを斜めの線で補間する処理がなされて独特な見た目になっていました。</p>
+
+<p>「ワープロ明朝」は24ドットの明朝体ビットマップフォント <a href="https://ja.wikipedia.org/wiki/Jiskan">jiskan24</a> にスムージング処理を行い、アウトラインフォント化したものです。</p>
+
+<h2>使用例</h2>
+<p>張り紙に:</p>
+<div class="example" id="poster">
+<p style="font-size: 32px">ここは</p>
+<p style="font-size:280px; text-align: center; margin-top: -2.5rem">禁煙</p>
+<p style="font-size: 32px; text-align: right">です。</p>
+</div>
+
+<p>年賀状に:</p>
+<div class="example">
+<p style="font-size:96px; text-align: center; margin: 1rem 0 3rem; letter-spacing: 1rem">謹賀新年</p>
+<p style="font-size:36px; text-align: center; margin-bottom: 3rem">旧年中は大変お世話になりました
+本年も何卒よろしくお願いします</p>
+<p style="font-size:36px; text-align: right; margin-bottom: 1rem">2018年　元旦</p>
+</div>
+
+<h2>収録文字</h2>
+<p>JIS X 0213:2004の第1～第3水準漢字と非漢字 8,797字のうち、単一のUnicodeコードポイントで表せない文字（か゚き゚く゚け゚こ゚等）25字を除いた計8,772字を収録しています。</p>
+<p>縦書きには非対応です。</p>
+
+<h2>ライセンス</h2>
+<p>ワープロ明朝は、派生元のjiskanフォントと同じくパブリックドメインです。制限なく自由に利用可能です。</p>
+
+<h2>ダウンロード</h2>
+<a href="https://github.com/irori/wpfont/releases/download/v1.0/wapuro-mincho-1.0.zip">wapuro-mincho-1.0.zip</a>
+
+<h2>参考リンク</h2>
+<dl>
+  <dt><a href="https://nanacchig7.blogspot.com/2017/04/blog-post.html">ななちゃんのブログ:ワープロ専用機のスムージング処理に萌える。</a></dt>
+  <dd>スムージング処理のアルゴリズムが解説されています。</dd>
+  <dt><a href="http://jikasei.me/font/jf-dotfont/">自家製ドットフォントシリーズ | 自家製フォント工房</a></dt>
+  <dd>ワープロ明朝の基になったフォント jiskan24 のドットフォント版を配布されています。</dd>
+</dl>
+</body>
+</html>
