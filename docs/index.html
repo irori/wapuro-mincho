@@ -13,11 +13,11 @@
 <style>
 @font-face {
     font-family: "ワープロ明朝";
-    src: url("wapuro-mincho.woff2") format("woff2"),
-         url("wapuro-mincho.woff") format("woff");
+    src: url("wapuro-mincho.subset.woff") format("woff");
 }
 
 body {
+    background-color: #fafafa;
     max-width: 800px;
     margin: 0 auto 10rem;
 }
@@ -41,6 +41,7 @@ h2 {
 
 .example {
     border: solid 1px;
+    background-color: white;
     margin: 0.5rem 5rem 3rem;
     padding: 2rem;
     box-shadow: 0.5rem 0.5rem 0.5rem rgba(0,0,0,0.4);
@@ -86,9 +87,9 @@ hr {
 <h1>ワープロ専用機の拡大処理を再現したフォント「ワープロ明朝」</h1>
 <p>「ワープロ明朝」は、1980年代～90年代初めのワープロ専用機などで使われていた、ビットマップフォントの拡大処理を再現したフォントです。</p>
 
-<p>ワープロ専用機も後期にはアウトラインフォントが搭載されて綺麗な拡大が可能になりましたが、それ以前は大きな文字を印刷するときにもビットマップフォントを拡大して使っていました。そのまま拡大するとギザギザになってしまうので、階段状になったドットを斜めの線で補間する処理がなされて独特な見た目になっていました。</p>
+<p>ワープロ専用機も後期にはアウトラインフォントが搭載されて綺麗な拡大が可能になりましたが、それ以前は大きな文字を印刷するときにもビットマップフォントを拡大して使っていました。そのまま拡大するとギザギザになってしまうので、階段状になったドットを斜めの線で補間するスムージング処理がなされて独特な見た目になっていました。</p>
 
-<p>「ワープロ明朝」は24ドットの明朝体ビットマップフォント <a href="https://ja.wikipedia.org/wiki/Jiskan">jiskan24</a> にスムージング処理を行い、アウトラインフォント化したものです。</p>
+<p>「ワープロ明朝」は24ドットの明朝体ビットマップフォント <a href="https://ja.wikipedia.org/wiki/Jiskan">jiskan24</a> にこのスムージング処理を行い、アウトラインフォント化したものです。</p>
 
 <h2>使用例</h2>
 <p>張り紙に:</p>
