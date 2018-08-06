@@ -2,6 +2,7 @@
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:title" content="ワープロ専用機の拡大処理を再現したフォント「ワープロ明朝」" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://irori.github.io/wpfont/" />
@@ -52,6 +53,14 @@ h2 {
     margin: 0;
 }
 
+.example .huge {
+    font-size: 280px;
+}
+
+.example .large {
+    font-size: 96px;
+}
+
 dd {
     margin-bottom: 1rem;
 }
@@ -68,6 +77,24 @@ hr {
 }
 .fb_iframe_widget {
     overflow: hidden;
+}
+
+@media (max-width: 800px) {
+    body {
+	margin: 0 1rem 10rem;
+    }
+    h1 {
+	font-size: 2em;
+    }
+    .example {
+	margin: 0.5rem 2rem 3rem;
+    }
+    .example .huge {
+	font-size: 33vw;
+    }
+    .example .large {
+	font-size: 64px;
+    }
 }
 
 </style>
@@ -93,15 +120,15 @@ hr {
 
 <h2>使用例</h2>
 <p>張り紙に:</p>
-<div class="example" id="poster">
+<div class="example">
 <p style="font-size: 32px">ここは</p>
-<p style="font-size:280px; text-align: center; margin-top: -2.5rem">禁煙</p>
+<p class="huge" style="text-align: center; margin-top: -0.15em">禁煙</p>
 <p style="font-size: 32px; text-align: right">です。</p>
 </div>
 
 <p>年賀状に:</p>
 <div class="example">
-<p style="font-size:96px; text-align: center; margin: 1rem 0 3rem; letter-spacing: 1rem">謹賀新年</p>
+<p class="large" style="text-align: center; margin: 1rem 0 3rem; letter-spacing: 1rem">謹賀新年</p>
 <p style="font-size:36px; text-align: center; margin-bottom: 3rem">旧年中は大変お世話になりました
 本年も何卒よろしくお願いします</p>
 <p style="font-size:36px; text-align: right; margin-bottom: 1rem">2018年　元旦</p>
