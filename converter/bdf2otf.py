@@ -27,6 +27,7 @@ def generate_otf(font, out_filename, limit=None):
     ufo.info.versionMajor = 1
     ufo.info.versionMinor = 0
     ufo.info.copyright = 'Public domain'
+    ufo.info.openTypeNameManufacturerURL = 'https://irori.github.io/wapuro-mincho/'
     ufo.info.openTypeOS2Type = []  # installable
 
     font.set_ufo_metrics(ufo.info)
