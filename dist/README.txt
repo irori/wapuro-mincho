@@ -3,7 +3,7 @@
 「ワープロ明朝」は、パブリックドメインの明朝体ビットマップフォント
 jiskan24 をベースに、ワープロ専用機風のの拡大処理を再現したフォントです。
 
-詳しくは、https://irori.github.io/wpfont/ をご覧ください。
+詳しくは、https://irori.github.io/wapuro-mincho/ をご覧ください。
 
 # 内容物
 
