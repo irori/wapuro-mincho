@@ -37,7 +37,7 @@ h1 {
 h2 {
     font-size: 2em;
     padding: 0.5rem;
-    border-left: 0.3rem solid #26a;
+    border-left: 0.5rem solid #26b;
 }
 
 .example {
@@ -59,6 +59,29 @@ h2 {
 
 .example .large {
     font-size: 96px;
+}
+
+.try-container {
+    display: flex;
+}
+
+#try input {
+    flex-glow: 1;
+    font-size: 1rem;
+    width: 100%;
+}
+
+#try select {
+    font-size: 1rem;
+    margin-right: .3rem;
+}
+
+#try-display {
+    font-family: "ワープロ明朝full", "ワープロ明朝";
+    min-height: 1em;
+    line-height: 1em;
+    margin: 0.5rem 0;
+    background-color: white;
 }
 
 dd {
@@ -131,8 +154,23 @@ hr {
 <p style="font-size:36px; text-align: right; margin-bottom: 1rem">2018年　元旦</p>
 </div>
 
+<div id="try" hidden>
+<h2>試し書き</h2>
+<div class="try-container">
+<select id="try-size">
+<option value="24px">24px</option>
+<option value="48px" selected>48px</option>
+<option value="96px">96px</option>
+<option value="144px">144px</option>
+</select>
+<input type="text" id="try-text" placeholder="ここに文字を打ち込むと下に表示されます。">
+</div>
+<div id="try-display"></div>
+<script src="try.js" async></script>
+</div>
+
 <h2>収録文字</h2>
-<p>JIS X 0213:2004の第1～第3水準漢字と非漢字 8,797字のうち、単一のUnicodeコードポイントで表せない文字（か゚き゚く゚け゚こ゚等）25字を除いた計8,772字を収録しています。</p>
+<p>JIS X 0213:2004の第1～第3水準漢字と非漢字 8,797字のうち、<a href="http://glyphwiki.org/wiki/Group:JISX0213%E5%90%88%E6%88%90%E6%96%87%E5%AD%97">単一のUnicodeコードポイントで表せない25字</a>を除いた計8,772字を収録しています。</p>
 <p>縦書きには非対応です。</p>
 
 <h2>ライセンス</h2>
