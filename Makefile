@@ -1,4 +1,4 @@
-all: dist/wapuro-mincho.otf dist/wapuro-mincho.woff dist/wapuro-mincho.woff2
+all: dist/wapuro-mincho.otf dist/wapuro-mincho.woff dist/wapuro-mincho.woff2 docs/wapuro-mincho.woff2 docs/wapuro-mincho.subset.woff
 
 SOURCE := bdf/jiskan24-2003-1.bdf
 
@@ -16,6 +16,9 @@ dist/wapuro-mincho.woff2: $(SOURCE)
 
 dist/wapuro-mincho.svg: $(SOURCE)
 	python converter/bdf2svg.py $< > $@
+
+docs/wapuro-mincho.woff2: dist/wapuro-mincho.woff2
+	cp $< $@
 
 docs/wapuro-mincho.subset.woff: dist/wapuro-mincho.woff docs/index.html
 	pyftsubset dist/wapuro-mincho.woff --text-file=docs/index.html --output-file=$@ --flavor=woff

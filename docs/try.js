@@ -18,5 +18,7 @@ if (document.fonts) {
     size.addEventListener('change', () => {
         display.style.fontSize = size.value;
     });
+    // Initialize
+    display.textContent = text.value;
     display.style.fontSize = size.value;
 }
