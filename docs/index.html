@@ -53,12 +53,14 @@ h2 {
     margin: 0;
 }
 
-.example .huge {
-    font-size: 280px;
+.example .normal {
+    font-size: 36px;
 }
-
 .example .large {
     font-size: 96px;
+}
+.example .huge {
+    font-size: 280px;
 }
 
 .try-container {
@@ -104,16 +106,24 @@ hr {
 	margin: 0 1rem 10rem;
     }
     h1 {
-	font-size: 2em;
+	font-size: 1.8em;
+    }
+    h2 {
+	font-size: 1.6em;
     }
     .example {
-	margin: 0.5rem 2rem 3rem;
+	margin: 0.5rem auto 3rem;
+	width: 80vw;
+	padding: 3vw;
+    }
+    .example .normal {
+	font-size: 5vw;
+    }
+    .example .large {
+	font-size: 11vw;
     }
     .example .huge {
 	font-size: 33vw;
-    }
-    .example .large {
-	font-size: 64px;
     }
 }
 
@@ -134,24 +144,24 @@ hr {
 <h1>ワープロ専用機の拡大処理を再現したフォント「ワープロ明朝」</h1>
 <p>「ワープロ明朝」は、1980年代～90年代初めのワープロ専用機などで使われていた、ビットマップフォントの拡大処理を再現したフォントです。</p>
 
-<p>ワープロ専用機も後期にはアウトラインフォントが搭載されて綺麗な拡大が可能になりましたが、それ以前は大きな文字を印刷するときにもビットマップフォントを拡大して使っていました。そのまま拡大するとギザギザになってしまうので、階段状になったドットを斜めの線で補間するスムージング処理がなされて独特な見た目になっていました。</p>
+<p>ワープロ専用機も後期にはアウトラインフォントが搭載されて綺麗な拡大が可能になりましたが、それ以前は大きな文字を印刷するときにもビットマップフォントを拡大して使っていました。そのまま拡大するとギザギザになってしまうので、階段状になったドットを斜めの線で補間する処理が施されて独特な見た目になっていました。</p>
 
-<p>「ワープロ明朝」は24ドットの明朝体ビットマップフォント <a href="https://ja.wikipedia.org/wiki/Jiskan">jiskan24</a> にこのスムージング処理を行い、アウトラインフォント化したものです。</p>
+<p>「ワープロ明朝」は24ドットの明朝体ビットマップフォント <a href="https://ja.wikipedia.org/wiki/Jiskan">jiskan24</a> にこの補間処理を行い、アウトラインフォント化したものです。</p>
 
 <h2>使用例</h2>
 <p>張り紙に:</p>
 <div class="example">
-<p style="font-size: 32px">ここは</p>
+<p class="normal">ここは</p>
 <p class="huge" style="text-align: center; margin-top: -0.15em">禁煙</p>
-<p style="font-size: 32px; text-align: right">です。</p>
+<p class="normal" style="text-align: right">です。</p>
 </div>
 
 <p>年賀状に:</p>
 <div class="example">
-<p class="large" style="text-align: center; margin: 1rem 0 3rem; letter-spacing: 1rem">謹賀新年</p>
-<p style="font-size:36px; text-align: center; margin-bottom: 3rem">旧年中は大変お世話になりました
+<p class="large" style="text-align: center; margin: 0.17em 0 0.5em; letter-spacing: 0.17em">謹賀新年</p>
+<p class="normal" style="text-align: center; margin-bottom: 1.5em">旧年中は大変お世話になりました
 本年も何卒よろしくお願いします</p>
-<p style="font-size:36px; text-align: right; margin-bottom: 1rem">2018年　元旦</p>
+<p class="normal" style="text-align: right; margin-bottom: 0.5em">2018年　元旦</p>
 </div>
 
 <div id="try" hidden>
@@ -174,17 +184,17 @@ hr {
 <p>縦書きには非対応です。</p>
 
 <h2>ライセンス</h2>
-<p>ワープロ明朝は、派生元のjiskanフォントと同じくパブリックドメインです。制限なく自由に利用可能です。</p>
+<p>ワープロ明朝は、派生元のjiskanフォントと同じくパブリックドメインです。無保証で提供され、制限なく自由に利用可能です。</p>
 
 <h2>ダウンロード</h2>
-<a href="https://github.com/irori/wapuro-mincho/releases/download/v1.0/wapuro-mincho-1.0.zip">wapuro-mincho-1.0.zip</a>
+<a href="https://github.com/irori/wapuro-mincho/releases/download/v1.0/wapuro-mincho-1.0.zip">wapuro-mincho-1.0.zip</a> (1.72MB)
 
 <h2>関連リンク</h2>
 <dl>
   <dt><a href="https://github.com/irori/wapuro-mincho">github.com/irori/wapuro-mincho</a></dt>
   <dd>フォントの生成に使用したソースコードはここにあります。</dd>
   <dt><a href="https://nanacchig7.blogspot.com/2017/04/blog-post.html">ななちゃんのブログ:ワープロ専用機のスムージング処理に萌える。</a></dt>
-  <dd>スムージング処理のアルゴリズムが解説されています。</dd>
+  <dd>スムージング処理のアルゴリズムはこちらを参考にしました。</dd>
   <dt><a href="http://jikasei.me/font/jf-dotfont/">自家製ドットフォントシリーズ | 自家製フォント工房</a></dt>
   <dd>ワープロ明朝の基になったフォント jiskan24 のドットフォント版を配布されています。</dd>
 </dl>
