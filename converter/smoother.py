@@ -29,7 +29,7 @@ class Smoother:
 
     # Interpolates the bitmap at p0.
     #   +--+--+--+
-    #   |  |p2|p4|
+    #   |p7|p2|p4|
     #   +--+--+--+
     #   |p1|p0|p6|
     #   +--+--+--+
@@ -40,6 +40,7 @@ class Smoother:
     #   - The top-left corner of p0 is filled.
     #   - If !(p3 | p5), the bottom-right corner of p1 is clipped.
     #   - If !(p4 | p6), the bottom-right corner of p2 is clipped.
+    #   - If !p7, the bottom-right corner of p7 is filled.
     # Repeat the above for all four directions.
     def _interpolate(self, p0):
         if self[p0]:
@@ -59,6 +60,9 @@ class Smoother:
                 self._clip(p1, (dir + 2) % 4)
             if not self[p4] and not self[p6]:
                 self._clip(p2, (dir + 2) % 4)
+            p7 = shift(p2, dirs[dir])
+            if not self[p7]:
+                self._clip(p7, (dir + 2) % 4)
 
     # For white cells, fills a corner. For black cells, clips a corner.
     def _clip(self, p, corner):

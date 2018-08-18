@@ -24,6 +24,15 @@ class SmootherTest(unittest.TestCase):
         s2.smooth()
         self.assertEqual(s2._bmp, [[1, 0, 0], [1, 0, 0], [1, 1, 1]])
 
+        s3 = Smoother([[0, 1, 1, 0], [1, 0, 0, 1], [1, 0, 0, 1], [0, 1, 1, 0]])
+        s3.smooth()
+        self.assertEqual(s3._bmp, [
+            [0|SE, 1|NW, 1|NE, 0|SW],
+            [1|NW, 0|NW, 0|NE, 1|NE],
+            [1|SW, 0|SW, 0|SE, 1|SE],
+            [0|NE, 1|SW, 1|SE, 0|NW]
+        ])
+
     def test_draw_black(self):
         s = Smoother([[0]])
         pb = PathBuilder()
