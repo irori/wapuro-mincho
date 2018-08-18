@@ -18,7 +18,7 @@ def draw(glyph, ufo_glyph, smooth=True):
         ufo_glyph.appendContour(contour)
 
 
-def generate_otf(font, out_filename, limit=None):
+def create_ufo(font, limit=None):
     ufo = defcon.Font()
 
     ufo.info.familyName = 'Wapuro Mincho'
@@ -56,11 +56,13 @@ def generate_otf(font, out_filename, limit=None):
             break
 
     print('%d glyphs converted' % count)
+    return ufo
 
+
+def compile(ufo, out_filename):
     ext = os.path.splitext(out_filename)[1]
     if ext == '.ufo':
-        ufo.save(out_filename)
-        return
+        return ufo
 
     otf = None
     if ext == '.ttf':
@@ -78,7 +80,7 @@ def generate_otf(font, out_filename, limit=None):
 
     otf['name'].addMultilingualName({'ja': u'ワープロ明朝'}, nameID=1)
     otf['name'].addMultilingualName({'ja': u'ワープロ明朝'}, nameID=4)
-    otf.save(out_filename)
+    return otf
 
 
 if __name__ == '__main__':
@@ -89,4 +91,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     font = Font(args.bdf)
-    generate_otf(font, args.out, limit=args.limit)
+    ufo = create_ufo(font, limit=args.limit)
+    otf = compile(ufo, args.out)
+    otf.save(args.out)
