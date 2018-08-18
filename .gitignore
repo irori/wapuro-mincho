@@ -1,2 +1,5 @@
 *.pyc
 out/
+dist/*.otf
+dist/*.woff
+dist/*.woff2

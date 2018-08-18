@@ -1,21 +1,10 @@
-all: dist/wapuro-mincho.otf dist/wapuro-mincho.woff dist/wapuro-mincho.woff2 docs/wapuro-mincho.woff2 docs/wapuro-mincho.subset.woff
-
 SOURCE := bdf/jiskan24-2003-1.bdf
+TARGETS := $(foreach ext, otf woff woff2, dist/wapuro-mincho.$(ext))
 
-dist/wapuro-mincho.otf: $(SOURCE)
-	python converter/convert.py --out $@ $<
+all: $(TARGETS) docs/wapuro-mincho.woff2 docs/wapuro-mincho.subset.woff
 
-dist/wapuro-mincho.ttf: $(SOURCE)
-	python converter/convert.py --out $@ $<
-
-dist/wapuro-mincho.woff: $(SOURCE)
-	python converter/convert.py --out $@ $<
-
-dist/wapuro-mincho.woff2: $(SOURCE)
-	python converter/convert.py --out $@ $<
-
-dist/wapuro-mincho.svg: $(SOURCE)
-	python converter/bdf2svg.py $< > $@
+$(TARGETS): $(SOURCE)
+	./build.sh
 
 docs/wapuro-mincho.woff2: dist/wapuro-mincho.woff2
 	cp $< $@
