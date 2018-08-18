@@ -2,10 +2,10 @@
 import unittest
 
 from font import Font
-import bdf2otf
+import convert
 
 
-class Bdf2OtfTest(unittest.TestCase):
+class ConverterTest(unittest.TestCase):
 
     def test_name_table(self):
         expected = [
@@ -23,8 +23,8 @@ class Bdf2OtfTest(unittest.TestCase):
         ]
 
         font = Font('bdf/jiskan24-2003-1.bdf')
-        ufo = bdf2otf.create_ufo(font, limit=1)
-        otf = bdf2otf.compile(ufo, 'out.ttf')
+        ufo = convert.create_ufo(font, limit=1)
+        otf = convert.compile(ufo, 'out.ttf')
         actual = []
         for name in sorted(otf['name'].names):
             self.assertEqual(name.platformID, 3)
