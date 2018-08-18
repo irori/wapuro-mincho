@@ -18,6 +18,16 @@ def draw(glyph, ufo_glyph, smooth=True):
         ufo_glyph.appendContour(contour)
 
 
+def japanese_name_record(nameID, string):
+    return {
+        'platformID': 3,
+        'encodingID': 1,
+        'languageID': 0x411,
+        'nameID': nameID,
+        'string': string
+    }
+
+
 def create_ufo(font, limit=None):
     ufo = defcon.Font()
 
@@ -28,6 +38,10 @@ def create_ufo(font, limit=None):
     ufo.info.versionMinor = 0
     ufo.info.copyright = 'Public domain'
     ufo.info.openTypeNameManufacturerURL = 'https://irori.github.io/wapuro-mincho/'
+    ufo.info.openTypeNameRecords = [
+        japanese_name_record(1, u'ワープロ明朝'),
+        japanese_name_record(4, u'ワープロ明朝'),
+    ]
     ufo.info.openTypeOS2Type = []  # installable
 
     font.set_ufo_metrics(ufo.info)
@@ -78,8 +92,6 @@ def compile(ufo, out_filename):
     else:
         raise RuntimeError('Unknown output file type: %s' % ext)
 
-    otf['name'].addMultilingualName({'ja': u'ワープロ明朝'}, nameID=1)
-    otf['name'].addMultilingualName({'ja': u'ワープロ明朝'}, nameID=4)
     return otf
 
 
