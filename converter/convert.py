@@ -73,6 +73,43 @@ def create_ufo(font, limit=None):
     return ufo
 
 
+def h2x(ufo):
+    ufo.info.styleMapFamilyName = 'Wapuro Mincho YokoBaikaku'
+    ufo.info.styleName = 'YokoBaikaku'
+    ufo.info.openTypeNameRecords = [
+        japanese_name_record(1, u'ワープロ明朝 横倍角'),
+        japanese_name_record(4, u'ワープロ明朝 横倍角'),
+        japanese_name_record(16, u'ワープロ明朝'),
+    ]
+    ufo.info.openTypeNameRecords.append(japanese_name_record(17, u'横倍角'))
+    for glyph in ufo:
+        glyph.width *= 2
+        for contour in glyph:
+            for point in contour:
+                point.x *= 2
+
+
+def v2x(ufo):
+    ufo.info.styleMapFamilyName = 'Wapuro Mincho TateBaikaku'
+    ufo.info.styleName = 'TateBaikaku'
+    ufo.info.openTypeNameRecords = [
+        japanese_name_record(1, u'ワープロ明朝 縦倍角'),
+        japanese_name_record(4, u'ワープロ明朝 縦倍角'),
+        japanese_name_record(16, u'ワープロ明朝'),
+    ]
+    ufo.info.openTypeNameRecords.append(japanese_name_record(17, u'縦倍角'))
+
+    ufo.info.ascender *= 2
+    ufo.info.descender *= 2
+    ufo.info.capHeight *= 2
+    ufo.info.xHeight *= 2
+
+    for glyph in ufo:
+        for contour in glyph:
+            for point in contour:
+                point.y *= 2
+
+
 def compile(ufo, out_filename):
     ext = os.path.splitext(out_filename)[1]
     if ext == '.ufo':
@@ -99,10 +136,15 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--limit', metavar='N', type=int, help='limit number of glyphs to convert')
     parser.add_argument('--out', metavar='FILENAME', help='output file name')
+    parser.add_argument('--style', metavar='h2x|v2x', help='style')
     parser.add_argument('bdf', help='input bdf file')
     args = parser.parse_args()
 
     font = Font(args.bdf)
     ufo = create_ufo(font, limit=args.limit)
+    if args.style == 'h2x':
+        h2x(ufo)
+    elif args.style == 'v2x':
+        v2x(ufo)
     otf = compile(ufo, args.out)
     otf.save(args.out)
