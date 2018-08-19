@@ -1,6 +1,7 @@
 if (document.fonts) {
     let text = document.getElementById('try-text');
     let size = document.getElementById('try-size');
+    let style = document.getElementById('try-style');
     let display = document.getElementById('try-display');
     let face;
 
@@ -18,7 +19,11 @@ if (document.fonts) {
     size.addEventListener('change', () => {
         display.style.fontSize = size.value;
     });
+    style.addEventListener('change', () => {
+        display.setAttribute('class', style.value);
+    });
     // Initialize
     display.textContent = text.value;
     display.style.fontSize = size.value;
+    display.setAttribute('class', style.value);
 }

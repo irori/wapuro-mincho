@@ -17,6 +17,16 @@
     src: url("wapuro-mincho.subset.woff") format("woff");
 }
 
+@font-face {
+    font-family: "ワープロ明朝横倍角";
+    src: url("wapuro-mincho-yoko2x.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "ワープロ明朝縦倍角";
+    src: url("wapuro-mincho-tate2x.woff2") format("woff2");
+}
+
 body {
     background-color: #fafafa;
     max-width: 800px;
@@ -65,12 +75,13 @@ h2 {
 
 .try-container {
     display: flex;
+    flex-wrap: wrap;
 }
 
 #try input {
-    flex-glow: 1;
+    flex-grow: 1;
     font-size: 1rem;
-    width: 100%;
+    min-width: 280px;
 }
 
 #try select {
@@ -84,6 +95,15 @@ h2 {
     line-height: 1em;
     margin: 0.5rem 0;
     background-color: white;
+}
+
+#try-display.h2x {
+    font-family: "ワープロ明朝横倍角", "ワープロ明朝";
+}
+
+#try-display.v2x {
+    font-family: "ワープロ明朝縦倍角", "ワープロ明朝";
+    line-height: 2em;
 }
 
 dd {
@@ -177,6 +197,11 @@ hr {
 <option value="48px" selected>48px</option>
 <option value="96px">96px</option>
 <option value="144px">144px</option>
+</select>
+<select id="try-style">
+<option value="normal" selected>全角</option>
+<option value="v2x">縦倍角</option>
+<option value="h2x">横倍角</option>
 </select>
 <input type="text" id="try-text" placeholder="ここに文字を打ち込むと下に表示されます。">
 </div>
