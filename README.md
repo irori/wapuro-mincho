@@ -1,27 +1,25 @@
-# ワープロ明朝
+# ワープロ明朝 (Wāpuro Mincho)
 
-「ワープロ明朝」は、パブリックドメインの明朝体ビットマップフォント
-jiskan24 をベースに、ワープロ専用機風の拡大処理を再現したフォントです。
+"ワープロ明朝" is a font that reproduced the smoothing algorithm used in the 80-90's Japanese word processors.
 
-![サンプル](https://irori.github.io/wapuro-mincho/poster.png)
+![Sample](https://irori.github.io/wapuro-mincho/poster.png)
 
-# 各ディレクトリの説明
-- `bdf` : 変換元のビットマップフォントが入っています。
-- `converter` : ビットマップフォントを読み込み、スムージング処理を行ってアウトラインフォントを生成するスクリプトが入っています。
-- `dist` : 生成されたフォントが入っています。
-- `docs` : [ウェブサイト](https://irori.github.io/wapuro-mincho/)のソースです。
+# Directories
+- `bdf` : Contains the base bitmap font (Jiskan24).
+- `converter` : Contains a script that generates smoothed outline fonts from bitmap fonts.
+- `dist` : Generated fonts are placed in this directory.
+- `docs` : Source code of the [web site](https://irori.github.io/wapuro-mincho/).
 
-# ビルド方法
-Python2が必要です（依存ライブラリのbdflibがPython3未対応のため）。
+# Build
+Python2 needed (because some of the dependent libraries does not support Python3).
 
-`pip`で依存ライブラリをインストールして、`make`でビルドします。
+Install the dependent libraries with `pip`, and build with `make`.
 
 ```
 pip install -r requirements.txt
 make
 ```
 
-
-# ライセンス
-- `bdf`, `dist` ディレクトリ内のフォントファイルはパブリックドメインです。
-- `converter` ディレクトリ内のスクリプトは[MITライセンス](LICENSE)です。
+# License
+- The font files in the `bdf` and `dist` directories are public domain.
+- The script files in `converter` directory are governed by the [MIT license](LICENSE).
