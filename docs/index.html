@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="style.css">
+<link rel="preload" as="font" type="font/woff" href="wapuro-mincho.subset.woff" crossorigin>
 <meta property="og:title" content="ワープロ専用機の拡大処理を再現したフォント「ワープロ明朝」" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://irori.github.io/wapuro-mincho/" />
@@ -11,148 +13,6 @@
 <meta property="og:description" content="「ワープロ明朝」は、1980年代～90年代初めのワープロ専用機などで使われていた、ビットマップフォントの拡大処理を再現したフォントです。" />
 <meta name="twitter:card" content="summary_large_image">
 <title>ワープロ専用機の拡大処理を再現したフォント「ワープロ明朝」</title>
-<style>
-@font-face {
-    font-family: "ワープロ明朝";
-    src: url("wapuro-mincho.subset.woff") format("woff");
-}
-
-@font-face {
-    font-family: "ワープロ明朝横倍角";
-    src: url("wapuro-mincho-yoko2x.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "ワープロ明朝縦倍角";
-    src: url("wapuro-mincho-tate2x.woff2") format("woff2");
-}
-
-body {
-    background-color: #fafafa;
-    max-width: 800px;
-    margin: 0 auto 10rem;
-}
-
-h1, h2 {
-    font-family: "ワープロ明朝";
-    font-weight: normal;
-    background-image: radial-gradient(#ccc 30%, transparent 0);
-    background-size: 4px 4px;
-}
-h1 {
-    font-size: 3em;
-    padding: 1rem;
-    font-style: italic;
-}
-h2 {
-    font-size: 2em;
-    padding: 0.5rem;
-    border-left: 0.5rem solid #26b;
-}
-
-.example {
-    border: solid 1px;
-    background-color: white;
-    margin: 0.5rem 5rem 3rem;
-    padding: 2rem;
-    box-shadow: 0.5rem 0.5rem 0.5rem rgba(0,0,0,0.4);
-    font-family: "ワープロ明朝";
-}
-
-.example p {
-    margin: 0;
-}
-
-.example .normal {
-    font-size: 36px;
-}
-.example .large {
-    font-size: 96px;
-}
-.example .huge {
-    font-size: 280px;
-}
-
-.try-container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-#try input {
-    flex-grow: 1;
-    font-size: 1rem;
-    min-width: 280px;
-}
-
-#try select {
-    font-size: 1rem;
-    margin-right: .3rem;
-}
-
-#try-display {
-    font-family: "ワープロ明朝full", "ワープロ明朝";
-    min-height: 1em;
-    line-height: 1em;
-    margin: 0.5rem 0;
-    background-color: white;
-}
-
-#try-display.h2x {
-    font-family: "ワープロ明朝横倍角", "ワープロ明朝";
-}
-
-#try-display.v2x {
-    font-family: "ワープロ明朝縦倍角", "ワープロ明朝";
-    line-height: 2em;
-}
-
-dd {
-    margin-bottom: 1rem;
-}
-
-hr {
-    margin-top: 2rem;
-}
-.social {
-    display: inline-block;
-    margin: 0 0.3rem 0.3rem 0;
-}
-.fb_iframe_widget > span {
-    vertical-align: baseline !important;
-}
-
-.author {
-    font-size: small;
-    text-align: right;
-}
-
-@media (max-width: 800px) {
-    body {
-	margin: 0 1rem 10rem;
-    }
-    h1 {
-	font-size: 1.8em;
-    }
-    h2 {
-	font-size: 1.6em;
-    }
-    .example {
-	margin: 0.5rem auto 3rem;
-	width: 80vw;
-	padding: 3vw;
-    }
-    .example .normal {
-	font-size: 5vw;
-    }
-    .example .large {
-	font-size: 11vw;
-    }
-    .example .huge {
-	font-size: 33vw;
-    }
-}
-
-</style>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-25577560-3"></script>
