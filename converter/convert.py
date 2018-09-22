@@ -63,6 +63,7 @@ def create_ufo(font, limit=None):
             ufo_glyph.unicode = u
 
         ufo_glyph.width = font.width
+        ufo_glyph.height = font.ascent - font.descent
         draw(g, ufo_glyph)
 
         count += 1
