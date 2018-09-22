@@ -46,6 +46,8 @@ def create_ufo(font, limit=None):
 
     font.set_ufo_metrics(ufo.info)
 
+    vert_feature = []
+
     count = 0
     for g in font.glyphs():
         if len(g.unicode) > 1:
@@ -66,9 +68,20 @@ def create_ufo(font, limit=None):
         ufo_glyph.height = font.ascent - font.descent
         draw(g, ufo_glyph)
 
+        vg = g.vertical_variant()
+        if vg is not None:
+            ufo_vglyph = ufo.newGlyph(vg.name())
+            ufo_vglyph.width = font.width
+            ufo_vglyph.height = font.ascent - font.descent
+            draw(vg, ufo_vglyph)
+            vert_feature.append(' sub %s by %s;' % (g.name(), vg.name()))
+
         count += 1
         if limit and count >= limit:
             break
+
+    if len(vert_feature) > 0:
+        ufo.features.text = 'feature vert {\n' + '\n'.join(vert_feature) + '\n} vert;'
 
     print('%d glyphs converted' % count)
     return ufo

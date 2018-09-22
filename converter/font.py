@@ -4,6 +4,7 @@ from bdflib import reader
 
 from charset import codeconv
 from smoother import Smoother, SCALE
+from vertical import vertical_glyph
 
 MARGIN = 8
 
@@ -15,7 +16,13 @@ class Glyph:
         self.unicode = unicode
 
     def name(self):
-        return self.bdf_glyph.name
+        return 'jis' + self.bdf_glyph.name
+
+    def vertical_variant(self):
+        vg = vertical_glyph(self.bdf_glyph)
+        if vg is None:
+            return None
+        return Glyph(self.font, vg, None)
 
     def vectorize(self, smooth=True):
         s = Smoother(self._bitmap())
