@@ -59,6 +59,20 @@ h2 {
     font-size: 280px;
 }
 
+.nenga {
+    -webkit-writing-mode: vertical-rl;
+    -ms-writing-mode: tb-rl;
+    writing-mode: vertical-rl;
+    margin: 0.5rem auto 3rem;
+    width: 21rem;  /* for FireFox */
+}
+
+_:-ms-lang(x),
+.nenga {
+    margin-left: 5rem;
+    height: 35rem;
+}
+
 .try-container {
     display: flex;
     flex-wrap: wrap;
@@ -126,6 +140,14 @@ hr {
 	margin: 0.5rem auto 3rem;
 	width: 80vw;
 	padding: 3vw;
+    }
+    .nenga {
+	width: 50vw;
+    }
+    _:-ms-lang(x),
+    .nenga {
+	margin-left: 20vw;
+	height: 80vw;
     }
     .example .normal {
 	font-size: 5vw;
