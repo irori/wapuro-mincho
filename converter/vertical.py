@@ -10,7 +10,7 @@ _CONVERSION_TABLE = {
     0x2123: (None, (15, 15)),
     0x2131: (_ROT90, None),
     0x2132: (_ROT90, None),
-    0x213c: (_ROT90FLIP, None), # FIXME
+    0x213c: (_ROT90FLIP, None),
     0x213d: (_ROT90, None),
     0x213e: (_ROT90, None),
     0x2141: (_ROT90FLIP, None),
@@ -75,6 +75,8 @@ def vertical_glyph(glyph):
         data = _rotate90(reversed(data), glyph.bbW)
     if dxdy is not None:
         data = _translate(data, dxdy)
+    if glyph.codepoint == 0x213c:
+        data[1] <<= 1
     vg.data = data
     return vg
 
