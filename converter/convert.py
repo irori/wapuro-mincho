@@ -96,6 +96,8 @@ def h2x(ufo):
         japanese_name_record(16, u'ワープロ明朝'),
     ]
     ufo.info.openTypeNameRecords.append(japanese_name_record(17, u'横倍角'))
+    ufo.info.openTypeVheaVertTypoAscender *= 2
+    ufo.info.openTypeVheaVertTypoDescender *= 2
     for glyph in ufo:
         glyph.width *= 2
         for contour in glyph:
@@ -119,6 +121,7 @@ def v2x(ufo):
     ufo.info.xHeight *= 2
 
     for glyph in ufo:
+        glyph.height *= 2
         for contour in glyph:
             for point in contour:
                 point.y *= 2
