@@ -57,6 +57,7 @@ class Font:
 
     def set_ufo_metrics(self, info):
         info.unitsPerEm = self.width
+        info.openTypeOS2TypoLineGap = 0
         info.ascender = self.ascent
         info.descender = self.descent
         info.capHeight = self.bdf[0x2354].get_ascent() * SCALE  # FULLWIDTH LATIN CAPITAL LETTER T
@@ -64,7 +65,7 @@ class Font:
         info.postscriptIsFixedPitch = True
         info.openTypeVheaVertTypoAscender = info.unitsPerEm // 2
         info.openTypeVheaVertTypoDescender = info.unitsPerEm // 2
-        info.openTypeVheaVertTypoLineGap = info.unitsPerEm // 5
+        info.openTypeVheaVertTypoLineGap = 0
 
     def glyphs(self):
         for cp in self.bdf.codepoints():
