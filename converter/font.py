@@ -16,7 +16,7 @@ class Glyph:
         self.unicode = unicode
 
     def name(self):
-        return 'jis' + self.bdf_glyph.name
+        return 'jis' + self.bdf_glyph.name.decode('ascii')
 
     def vertical_variant(self):
         vg = vertical_glyph(self.bdf_glyph)
@@ -28,7 +28,7 @@ class Glyph:
         s = Smoother(self._bitmap())
         if smooth:
             s.smooth()
-        return s.vectorize(MARGIN, -self.font.bdf['FONT_DESCENT'] * SCALE)
+        return s.vectorize(MARGIN, -self.font.bdf[b'FONT_DESCENT'] * SCALE)
 
     def _bitmap(self):
         bitmap = []
@@ -43,13 +43,13 @@ class Glyph:
 
 class Font:
     def __init__(self, bdf_filename):
-        with open(bdf_filename) as f:
+        with open(bdf_filename, 'rb') as f:
             self.bdf = reader.read_bdf(f)
-        self.codeconv = codeconv(self.bdf['CHARSET_REGISTRY'],
-                                 self.bdf['CHARSET_ENCODING'])
-        self.width = self.bdf[self.bdf['DEFAULT_CHAR']].bbW * SCALE + MARGIN * 2
-        self.ascent = self.bdf['FONT_ASCENT'] * SCALE + MARGIN
-        self.descent = -self.bdf['FONT_DESCENT'] * SCALE - MARGIN
+        self.codeconv = codeconv(self.bdf[b'CHARSET_REGISTRY'].decode('ascii'),
+                                 self.bdf[b'CHARSET_ENCODING'].decode('ascii'))
+        self.width = self.bdf[self.bdf[b'DEFAULT_CHAR']].bbW * SCALE + MARGIN * 2
+        self.ascent = self.bdf[b'FONT_ASCENT'] * SCALE + MARGIN
+        self.descent = -self.bdf[b'FONT_DESCENT'] * SCALE - MARGIN
 
         # For some reasons, IDEOGRAPHIC SPACE in jiskan24-2003-1.bdf is not
         # really a whitespace. Overwrite it.
@@ -71,7 +71,7 @@ class Font:
         for cp in self.bdf.codepoints():
             unicode = self.codeconv.unicode(cp)
             if unicode is None:
-                print >> sys.stderr, 'Unknown codepoint 0x%x:' % cp
-                print >> sys.stderr, self.bdf[cp]
+                print('Unknown codepoint 0x%x:' % cp, file=sys.stderr)
+                print(self.bdf[cp], file=sys.stderr)
                 continue
             yield Glyph(self, self.bdf[cp], unicode)

@@ -51,7 +51,7 @@ def create_ufo(font, limit=None):
     count = 0
     for g in font.glyphs():
         if len(g.unicode) > 1:
-            print >> sys.stderr, 'Cannot convert unicode sequence %s' % g.unicode
+            print('Cannot convert unicode sequence %s' % g.unicode, file=sys.stderr)
             continue
         ufo_glyph = ufo.newGlyph(g.name())
 

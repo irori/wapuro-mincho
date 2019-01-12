@@ -13,7 +13,7 @@ class JIS:
         if high > 0xff or low > 0xff:
             return None
         try:
-            ustr, n = self.decoder(str(bytearray((high, low))))
+            ustr, n = self.decoder(bytearray((high, low)))
             return ustr
         except UnicodeDecodeError:
             return None

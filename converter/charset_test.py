@@ -7,7 +7,7 @@ import charset
 class JISTest(unittest.TestCase):
 
     def test_jis(self):
-        with open('bdf/jiskan24-2003-1.bdf') as f:
+        with open('bdf/jiskan24-2003-1.bdf', 'rb') as f:
             bdf = reader.read_bdf(f)
         cconv = charset.JIS()
 

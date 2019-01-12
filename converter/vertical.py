@@ -90,7 +90,7 @@ def vertical_glyph(glyph):
     if glyph.codepoint not in _CONVERSION_TABLE:
         return None
     rot, dxdy = _CONVERSION_TABLE[glyph.codepoint]
-    vg = model.Glyph(glyph.name + 'v', None,
+    vg = model.Glyph(glyph.name + b'v', None,
                      glyph.bbX, glyph.bbY, glyph.bbW, glyph.bbH,
                      glyph.advance, glyph.codepoint)
     data = glyph.data

@@ -11,8 +11,6 @@
 - `docs` : Source code of the [web site](https://irori.github.io/wapuro-mincho/).
 
 # Build
-Python2 needed (because some of the dependent libraries does not support Python3).
-
 Install the dependent libraries with `pip`, and build with `make`.
 
 ```
