@@ -27,6 +27,10 @@ body {
     margin: 0 auto 10rem;
 }
 
+.ww {
+    display: inline-block;
+}
+
 h1, h2 {
     font-family: "ワープロ明朝";
     font-weight: normal;
@@ -37,6 +41,7 @@ h1 {
     font-size: 3em;
     padding: 1rem;
     font-style: italic;
+    text-align: center;
 }
 h2 {
     font-size: 2em;
