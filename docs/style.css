@@ -1,24 +1,21 @@
 @font-face {
     font-family: "ワープロ明朝";
-    src: url("wapuro-mincho.subset.woff") format("woff");
+    src: url("wapuro-mincho.subset.woff2") format("woff2");
 }
 
 @font-face {
     font-family: "ワープロ明朝full";
-    src: url("wapuro-mincho.woff2") format("woff2"),
-	 url("wapuro-mincho.woff") format("woff");
+    src: url("wapuro-mincho.woff2") format("woff2");
 }
 
 @font-face {
     font-family: "ワープロ明朝横倍角";
-    src: url("wapuro-mincho-yoko2x.woff2") format("woff2"),
-	 url("wapuro-mincho-yoko2x.woff") format("woff");
+    src: url("wapuro-mincho-yoko2x.woff2") format("woff2");
 }
 
 @font-face {
     font-family: "ワープロ明朝縦倍角";
-    src: url("wapuro-mincho-tate2x.woff2") format("woff2"),
-	 url("wapuro-mincho-tate2x.woff") format("woff");
+    src: url("wapuro-mincho-tate2x.woff2") format("woff2");
 }
 
 body {
