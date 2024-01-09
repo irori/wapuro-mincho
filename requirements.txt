@@ -4,7 +4,7 @@ booleanOperations==0.9.0
 Brotli==1.0.9
 cffsubr==0.2.9.post1
 defcon==0.10.2
-fonttools==4.41.0
+fonttools==4.43.0
 fs==2.4.16
 pyclipper==1.3.0.post4
 six==1.16.0
