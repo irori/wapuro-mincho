@@ -19,6 +19,8 @@ class Glyph:
         return 'jis' + self.bdf_glyph.name.decode('ascii')
 
     def vertical_variant(self):
+        if self.font.plane != 1:
+            return None
         vg = vertical_glyph(self.bdf_glyph)
         if vg is None:
             return None
@@ -47,13 +49,15 @@ class Font:
             self.bdf = reader.read_bdf(f)
         self.codeconv = codeconv(self.bdf[b'CHARSET_REGISTRY'].decode('ascii'),
                                  self.bdf[b'CHARSET_ENCODING'].decode('ascii'))
+        self.plane = int(self.bdf[b'CHARSET_ENCODING'])
         self.width = self.bdf[self.bdf[b'DEFAULT_CHAR']].bbW * SCALE + MARGIN * 2
         self.ascent = self.bdf[b'FONT_ASCENT'] * SCALE + MARGIN
         self.descent = -self.bdf[b'FONT_DESCENT'] * SCALE - MARGIN
 
         # For some reasons, IDEOGRAPHIC SPACE in jiskan24-2003-1.bdf is not
         # really a whitespace. Overwrite it.
-        self.bdf[0x2121].data = map(lambda _: 0, self.bdf[0x2121].data)
+        if self.plane == 1:
+            self.bdf[0x2121].data = map(lambda _: 0, self.bdf[0x2121].data)
 
     def set_ufo_metrics(self, info):
         info.unitsPerEm = self.width

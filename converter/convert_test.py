@@ -23,7 +23,7 @@ class ConverterTest(unittest.TestCase):
         ]
 
         font = Font('bdf/jiskan24-2003-1.bdf')
-        ufo = convert.create_ufo(font, limit=1)
+        ufo = convert.create_ufo([font], limit=1)
         otf = convert.compile(ufo, 'out.ttf')
         actual = []
         for name in sorted(otf['name'].names):
@@ -52,7 +52,7 @@ class ConverterTest(unittest.TestCase):
         ]
 
         font = Font('bdf/jiskan24-2003-1.bdf')
-        ufo = convert.create_ufo(font, limit=1)
+        ufo = convert.create_ufo([font], limit=1)
         convert.h2x(ufo)
         otf = convert.compile(ufo, 'out.ttf')
         actual = []
@@ -82,7 +82,7 @@ class ConverterTest(unittest.TestCase):
         ]
 
         font = Font('bdf/jiskan24-2003-1.bdf')
-        ufo = convert.create_ufo(font, limit=1)
+        ufo = convert.create_ufo([font], limit=1)
         convert.v2x(ufo)
         otf = convert.compile(ufo, 'out.ttf')
         actual = []

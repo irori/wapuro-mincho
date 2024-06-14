@@ -9,7 +9,7 @@ class JISTest(unittest.TestCase):
     def test_jis(self):
         with open('bdf/jiskan24-2003-1.bdf', 'rb') as f:
             bdf = reader.read_bdf(f)
-        cconv = charset.JIS()
+        cconv = charset.JIS(1)
 
         single_cp = 0
         multi_cp = 0

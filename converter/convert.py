@@ -28,7 +28,7 @@ def japanese_name_record(nameID, string):
     }
 
 
-def create_ufo(font, limit=None):
+def create_ufo(fonts, limit=None):
     ufo = defcon.Font()
 
     ufo.info.familyName = 'Wapuro Mincho'
@@ -44,41 +44,42 @@ def create_ufo(font, limit=None):
     ]
     ufo.info.openTypeOS2Type = []  # installable
 
-    font.set_ufo_metrics(ufo.info)
+    fonts[0].set_ufo_metrics(ufo.info)
 
     vert_feature = []
 
     count = 0
-    for g in font.glyphs():
-        if len(g.unicode) > 1:
-            print('Cannot convert unicode sequence %s' % g.unicode, file=sys.stderr)
-            continue
-        ufo_glyph = ufo.newGlyph(g.name())
+    for font in fonts:
+        for g in font.glyphs():
+            if len(g.unicode) > 1:
+                print('Cannot convert unicode sequence %s' % g.unicode, file=sys.stderr)
+                continue
+            ufo_glyph = ufo.newGlyph(g.name())
 
-        # Associate halfwidth characters too
-        u = ord(g.unicode)
-        if u == 0x3000:
-            ufo_glyph.unicodes = [u, 0x20]
-        elif 0xff01 <= u <= 0xff5e:
-            ufo_glyph.unicodes = [u, u - 0xfee0]
-        else:
-            ufo_glyph.unicode = u
+            # Associate halfwidth characters too
+            u = ord(g.unicode)
+            if u == 0x3000:
+                ufo_glyph.unicodes = [u, 0x20]
+            elif 0xff01 <= u <= 0xff5e:
+                ufo_glyph.unicodes = [u, u - 0xfee0]
+            else:
+                ufo_glyph.unicode = u
 
-        ufo_glyph.width = font.width
-        ufo_glyph.height = font.ascent - font.descent
-        draw(g, ufo_glyph)
+            ufo_glyph.width = font.width
+            ufo_glyph.height = font.ascent - font.descent
+            draw(g, ufo_glyph)
 
-        vg = g.vertical_variant()
-        if vg is not None:
-            ufo_vglyph = ufo.newGlyph(vg.name())
-            ufo_vglyph.width = font.width
-            ufo_vglyph.height = font.ascent - font.descent
-            draw(vg, ufo_vglyph)
-            vert_feature.append(' sub %s by %s;' % (g.name(), vg.name()))
+            vg = g.vertical_variant()
+            if vg is not None:
+                ufo_vglyph = ufo.newGlyph(vg.name())
+                ufo_vglyph.width = font.width
+                ufo_vglyph.height = font.ascent - font.descent
+                draw(vg, ufo_vglyph)
+                vert_feature.append(' sub %s by %s;' % (g.name(), vg.name()))
 
-        count += 1
-        if limit and count >= limit:
-            break
+            count += 1
+            if limit and count >= limit:
+                break
 
     if len(vert_feature) > 0:
         ufo.features.text = 'feature vert {\n' + '\n'.join(vert_feature) + '\n} vert;'
@@ -154,11 +155,11 @@ if __name__ == '__main__':
     parser.add_argument('--limit', metavar='N', type=int, help='limit number of glyphs to convert')
     parser.add_argument('--out', metavar='FILENAME', help='output file name')
     parser.add_argument('--style', metavar='h2x|v2x', help='style')
-    parser.add_argument('bdf', help='input bdf file')
+    parser.add_argument('bdf', help='input bdf file', nargs='+')
     args = parser.parse_args()
 
-    font = Font(args.bdf)
-    ufo = create_ufo(font, limit=args.limit)
+    fonts = [Font(bdf) for bdf in args.bdf]
+    ufo = create_ufo(fonts, limit=args.limit)
     if args.style == 'h2x':
         h2x(ufo)
     elif args.style == 'v2x':

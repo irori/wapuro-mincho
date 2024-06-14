@@ -3,7 +3,10 @@ import re
 
 
 class JIS:
-    def __init__(self):
+    def __init__(self, plane):
+        if plane not in (1, 2):
+            raise ValueError('Invalid JIS plane %d' % plane)
+        self.plane = plane
         self.decoder = codecs.getdecoder('euc_jis_2004')
 
     def unicode(self, cp):
@@ -13,7 +16,11 @@ class JIS:
         if high > 0xff or low > 0xff:
             return None
         try:
-            ustr, n = self.decoder(bytearray((high, low)))
+            if self.plane == 2:
+                euc = (0x8f, high, low)
+            else:
+                euc = (high, low)
+            ustr, n = self.decoder(bytearray(euc))
             return ustr
         except UnicodeDecodeError:
             return None
@@ -21,5 +28,5 @@ class JIS:
 
 def codeconv(charset_registry, charset_encoding):
     if re.match(r'JISX\d+(\.\d+)?', charset_registry, flags=re.IGNORECASE):
-        return JIS()
-    raise RuntimeError('Unsupported encoding "%s"' % charset_registry)
+        return JIS(int(charset_encoding))
+    raise ValueError('Unsupported encoding "%s"' % charset_registry)
