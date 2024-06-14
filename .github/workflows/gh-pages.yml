@@ -1,0 +1,49 @@
+name: GitHub Pages
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Test
+      run: |
+        python -m unittest discover -s converter -p '*_test.py'
+
+    - name: Build
+      run: |
+        ./build.sh woff2
+        cp dist/*.woff2 site/
+        pyftsubset dist/wapuro-mincho.woff2 --text-file=site/index.html --output-file=site/wapuro-mincho.subset.woff2 --flavor=woff2
+
+    - name: Upload artifacts for GitHub Pages
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: site
+
+  deploy:
+    needs: build
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        id: deployment

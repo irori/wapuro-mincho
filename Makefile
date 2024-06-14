@@ -4,7 +4,7 @@ TARGETS := $(foreach ext, otf woff2, dist/wapuro-mincho.$(ext))
 all: $(TARGETS) docs/wapuro-mincho.woff2 docs/wapuro-mincho-yoko2x.woff2 docs/wapuro-mincho-tate2x.woff2 docs/wapuro-mincho.subset.woff2
 
 $(TARGETS): $(SOURCE)
-	./build.sh
+	./build.sh otf woff2
 
 docs/%.woff2: dist/%.woff2
 	cp $< $@
