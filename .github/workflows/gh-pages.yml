@@ -20,7 +20,7 @@ jobs:
 
     - name: Test
       run: |
-        python -m unittest discover -s converter -p '*_test.py'
+        ./test.sh
 
     - name: Build
       run: |

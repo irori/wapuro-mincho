@@ -8,14 +8,16 @@
 - `bdf` : Contains the base bitmap font (Jiskan24).
 - `converter` : Contains a script that generates smoothed outline fonts from bitmap fonts.
 - `dist` : Generated fonts are placed in this directory.
-- `docs` : Source code of the [web site](https://irori.github.io/wapuro-mincho/).
+- `site` : Source code of the [web site](https://irori.github.io/wapuro-mincho/).
 
 # Build
-Install the dependent libraries with `pip`, and build with `make`.
+Install the dependent libraries with `pip`, and run `build.sh`.
 
 ```
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-make
+./build.sh otf
 ```
 
 # License

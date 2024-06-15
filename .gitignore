@@ -1,4 +1,4 @@
 *.pyc
-out/
+.venv/
 dist/*.otf
 dist/*.woff2

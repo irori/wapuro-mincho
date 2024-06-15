@@ -1,3 +1,4 @@
+#!/bin/sh
 convert="python converter/convert.py"
 source=bdf/jiskan24-2003-1.bdf
 
