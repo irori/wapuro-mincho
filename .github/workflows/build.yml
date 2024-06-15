@@ -1,4 +1,4 @@
-name: GitHub Pages
+name: Build and Deploy
 on: push
 
 jobs:
@@ -24,9 +24,15 @@ jobs:
 
     - name: Build
       run: |
-        ./build.sh woff2
+        ./build.sh otf woff2
         cp dist/*.woff2 site/
         pyftsubset dist/wapuro-mincho.woff2 --text-file=site/index.html --output-file=site/wapuro-mincho.subset.woff2 --flavor=woff2
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: wapuro-mincho
+        path: dist
 
     - name: Upload artifacts for GitHub Pages
       uses: actions/upload-pages-artifact@v3
