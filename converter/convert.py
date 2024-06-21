@@ -6,6 +6,7 @@ import sys
 import defcon
 from ufo2ft import compileTTF, compileOTF
 
+import charset
 from font import Font
 
 
@@ -54,17 +55,9 @@ def create_ufo(fonts, limit=None):
             if len(g.unicode) > 1:
                 print('Cannot convert unicode sequence %s' % g.unicode, file=sys.stderr)
                 continue
+
             ufo_glyph = ufo.newGlyph(g.name())
-
-            # Associate halfwidth characters too
-            u = ord(g.unicode)
-            if u == 0x3000:
-                ufo_glyph.unicodes = [u, 0x20]
-            elif 0xff01 <= u <= 0xff5e:
-                ufo_glyph.unicodes = [u, u - 0xfee0]
-            else:
-                ufo_glyph.unicode = u
-
+            ufo_glyph.unicodes = charset.variants(ord(g.unicode))
             ufo_glyph.width = font.width
             ufo_glyph.height = font.ascent - font.descent
             draw(g, ufo_glyph)

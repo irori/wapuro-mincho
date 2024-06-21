@@ -30,3 +30,23 @@ def codeconv(charset_registry, charset_encoding):
     if re.match(r'JISX\d+(\.\d+)?', charset_registry, flags=re.IGNORECASE):
         return JIS(int(charset_encoding))
     raise ValueError('Unsupported encoding "%s"' % charset_registry)
+
+
+_variants_table = {}
+def _add_variant(cps):
+    for cp in cps:
+        _variants_table[cp] = cps
+
+_add_variant([0x3000, 0x20])  # IDEOGRAPHIC SPACE
+for i in range(0xff01, 0xff5f):
+    _add_variant([i - 0xfee0, i])  # Fullwidth ASCII variants
+_add_variant([0xffe0, 0xa2])  # FULLWIDTH CENT SIGN
+_add_variant([0xffe1, 0xa3])  # FULLWIDTH POUND SIGN
+_add_variant([0xffe2, 0xac])  # FULLWIDTH NOT SIGN
+# euc_jis_2004 maps 1-09-11 (MACRON) to U+00AF (MACRON) and 1-01-17 (OVERLINE) to U+FFE3 (FULLWIDTH MACRON).
+_add_variant([0xffe3, 0x203e]) # FULLWIDTH MACRON <- OVERLINE
+_add_variant([0xffe4, 0xa6])  # FULLWIDTH BROKEN BAR
+_add_variant([0xffe5, 0xa5])  # FULLWIDTH YEN SIGN
+
+def variants(u):
+    return _variants_table.get(u, [u])
