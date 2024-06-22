@@ -75,7 +75,5 @@ class Font:
         for cp in self.bdf.codepoints():
             unicode = self.codeconv.unicode(cp)
             if unicode is None:
-                print('Unknown codepoint 0x%x:' % cp, file=sys.stderr)
-                print(self.bdf[cp], file=sys.stderr)
                 continue
             yield Glyph(self, self.bdf[cp], unicode)
