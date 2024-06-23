@@ -48,16 +48,19 @@ def create_ufo(fonts, limit=None):
     fonts[0].set_ufo_metrics(ufo.info)
 
     vert_feature = []
+    liga_feature = []
 
     count = 0
     for font in fonts:
         for g in font.glyphs():
-            if len(g.unicode) > 1:
-                print('Cannot convert unicode sequence %s' % g.unicode, file=sys.stderr)
-                continue
-
             ufo_glyph = ufo.newGlyph(g.name())
-            ufo_glyph.unicodes = charset.variants(ord(g.unicode))
+
+            if len(g.unicode) == 1:
+                ufo_glyph.unicodes = charset.variants(ord(g.unicode))
+            else:
+                glyph_seq = font.codeconv.decompose(g.unicode)
+                liga_feature.append(' sub %s by %s;' % (glyph_seq, g.name()))
+
             ufo_glyph.width = font.width
             ufo_glyph.height = font.ascent - font.descent
             draw(g, ufo_glyph)
@@ -70,12 +73,21 @@ def create_ufo(fonts, limit=None):
                 draw(vg, ufo_vglyph)
                 vert_feature.append(' sub %s by %s;' % (g.name(), vg.name()))
 
+            if g.unicode == '\u309c':  # KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK
+                # Add COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK which is used in ligatures.
+                u309a = ufo.insertGlyph(ufo_glyph, 'u309A')
+                u309a.unicode = 0x309a
+
             count += 1
             if limit and count >= limit:
                 break
 
+    features = ''
     if len(vert_feature) > 0:
-        ufo.features.text = 'feature vert {\n' + '\n'.join(vert_feature) + '\n} vert;'
+        features += 'feature vert {\n' + '\n'.join(vert_feature) + '\n} vert;\n'
+    if len(liga_feature) > 0:
+        features += 'feature liga {\n' + '\n'.join(liga_feature) + '\n} liga;\n'
+    ufo.features.text = features
 
     print('%d glyphs converted' % count)
     return ufo

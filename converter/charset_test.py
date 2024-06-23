@@ -60,3 +60,8 @@ class JISTest(unittest.TestCase):
 
         self.assertEqual(unmapped, 9)
         self.assertEqual(len(unicode_to_jis), 2436)
+
+    def test_decompose(self):
+        cconv = charset.JIS(1)
+        self.assertEqual('jis1-04-11 u309A', cconv.decompose('\u304b\u309a'))
+        self.assertEqual('jis1-11-64 jis1-11-68', cconv.decompose('\u02e5\u02e9'))

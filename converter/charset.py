@@ -8,6 +8,7 @@ class JIS:
             raise ValueError('Invalid JIS plane %d' % plane)
         self.plane = plane
         self.decoder = codecs.getdecoder('euc_jis_2004')
+        self.encoder = codecs.getencoder('euc_jis_2004')
 
     def unicode(self, cp):
         # Convert JIS to EUC-JIS-2004 and then Unicode
@@ -24,6 +25,19 @@ class JIS:
             return ustr
         except UnicodeDecodeError:
             return None
+
+    def decompose(self, ustr):
+        names = []
+        for u in ustr:
+            try:
+                euc, n = self.encoder(u)
+                if euc[0] == 0x8f:
+                    names.append(f'jis2-{euc[1] - 0xa0:02}-{euc[2] - 0xa0:02}')
+                else:
+                    names.append(f'jis1-{euc[0] - 0xa0:02}-{euc[1] - 0xa0:02}')
+            except UnicodeEncodeError:
+                names.append(f'u{ord(u):04X}')
+        return ' '.join(names)
 
 
 def codeconv(charset_registry, charset_encoding):
