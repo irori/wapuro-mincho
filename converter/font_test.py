@@ -17,6 +17,17 @@ class FontTest(unittest.TestCase):
         self.assertEqual(info.capHeight, 200)
         self.assertEqual(info.xHeight, 140)
 
+    def test_vectorize(self):
+        f = Font('bdf/jiskan24-2003-1.bdf')
+
+        em_dash = f.glyph(0x213d)
+        paths = em_dash.vectorize()
+        self.assertEqual(paths, [[(0, 90), (256, 90), (256, 100), (0, 100)]])
+
+        v_em_dash = em_dash.vertical_variant()
+        paths = v_em_dash.vectorize()
+        self.assertEqual(paths, [[(118, -28), (128, -28), (128, 228), (118, 228)]])
+
 
 if __name__ == '__main__':
     unittest.main()

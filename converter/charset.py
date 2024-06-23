@@ -61,6 +61,7 @@ _add_variant([0xffe2, 0xac])  # FULLWIDTH NOT SIGN
 _add_variant([0xffe3, 0x203e]) # FULLWIDTH MACRON <- OVERLINE
 _add_variant([0xffe4, 0xa6])  # FULLWIDTH BROKEN BAR
 _add_variant([0xffe5, 0xa5])  # FULLWIDTH YEN SIGN
+_add_variant([0x2014, 0x2015])  # HORIZONTAL BAR / EM DASH
 
 def variants(u):
     return _variants_table.get(u, [u])

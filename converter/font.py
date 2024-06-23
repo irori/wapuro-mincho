@@ -24,13 +24,29 @@ class Glyph:
         vg = vertical_glyph(self.bdf_glyph)
         if vg is None:
             return None
-        return Glyph(self.font, vg, None)
+        return Glyph(self.font, vg, self.unicode)
 
     def vectorize(self, smooth=True):
         s = Smoother(self._bitmap())
         if smooth:
             s.smooth()
-        return s.vectorize(MARGIN, -self.font.bdf[b'FONT_DESCENT'] * SCALE)
+        ox = MARGIN
+        oy = -self.font.bdf[b'FONT_DESCENT'] * SCALE
+        paths = s.vectorize(ox, oy)
+        if self.should_occupy_imaginary_body():
+            for path in paths:
+                for i in range(len(path)):
+                    x, y = path[i]
+                    if x == ox:
+                        x = 0
+                    elif x == ox + self.bdf_glyph.bbW * SCALE:
+                        x += MARGIN
+                    if y == oy:
+                        y -= MARGIN
+                    elif y == oy + self.bdf_glyph.bbH * SCALE:
+                        y += MARGIN
+                    path[i] = (x, y)
+        return paths
 
     def _bitmap(self):
         bitmap = []
@@ -41,6 +57,16 @@ class Glyph:
                 a.append(line & (1 << b) and 1 or 0)
             bitmap.append(a)
         return bitmap
+
+    def should_occupy_imaginary_body(self):
+        if len(self.unicode) != 1:
+            return False
+        u = ord(self.unicode)
+        if u == 0x2014 or u == 0x2015:  # HORIZONTAL BAR / EM DASH
+            return True
+        if 0x2500 <= u <= 0x257f:  # BOX DRAWINGS
+            return True
+        return False
 
 
 class Font:
@@ -73,7 +99,12 @@ class Font:
 
     def glyphs(self):
         for cp in self.bdf.codepoints():
-            unicode = self.codeconv.unicode(cp)
-            if unicode is None:
-                continue
-            yield Glyph(self, self.bdf[cp], unicode)
+            g = self.glyph(cp)
+            if g is not None:
+                yield g
+
+    def glyph(self, cp):
+        unicode = self.codeconv.unicode(cp)
+        if unicode is None:
+            return None
+        return Glyph(self, self.bdf[cp], unicode)
