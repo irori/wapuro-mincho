@@ -2,13 +2,13 @@ import unittest
 
 import defcon
 
-from font import Font
+from jiskan24 import Jiskan24
 
 
-class FontTest(unittest.TestCase):
+class Jiskan24Test(unittest.TestCase):
 
     def test_ufo_metrics(self):
-        f = Font('bdf/jiskan24-2003-1.bdf')
+        f = Jiskan24('bdf/jiskan24-2003-1.bdf')
         info = defcon.Info()
         f.set_ufo_metrics(info)
         self.assertEqual(info.unitsPerEm, 256)
@@ -18,7 +18,7 @@ class FontTest(unittest.TestCase):
         self.assertEqual(info.xHeight, 140)
 
     def test_vectorize(self):
-        f = Font('bdf/jiskan24-2003-1.bdf')
+        f = Jiskan24('bdf/jiskan24-2003-1.bdf')
 
         em_dash = f.glyph(0x213d)
         paths = em_dash.vectorize()

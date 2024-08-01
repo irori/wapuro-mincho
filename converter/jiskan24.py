@@ -2,7 +2,7 @@ import sys
 
 from bdflib import reader
 
-from charset import codeconv
+from jisx0213 import codeconv
 from smoother import Smoother, SCALE
 from vertical import vertical_glyph
 
@@ -69,7 +69,7 @@ class Glyph:
         return False
 
 
-class Font:
+class Jiskan24:
     def __init__(self, bdf_filename):
         with open(bdf_filename, 'rb') as f:
             self.bdf = reader.read_bdf(f)

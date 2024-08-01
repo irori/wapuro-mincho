@@ -1,15 +1,15 @@
 import unittest
 
 from bdflib import reader
-import charset
+import jisx0213
 
 
-class JISTest(unittest.TestCase):
+class JISX0213Test(unittest.TestCase):
 
     def test_plane1(self):
         with open('bdf/jiskan24-2003-1.bdf', 'rb') as f:
             bdf = reader.read_bdf(f)
-        cconv = charset.JIS(1)
+        cconv = jisx0213.JISX0213(1)
 
         unmapped = 0
         single_cp = 0
@@ -22,7 +22,7 @@ class JISTest(unittest.TestCase):
                 unmapped += 1
             elif len(unicode) == 1:
                 single_cp += 1
-                variants = charset.variants(ord(unicode))
+                variants = jisx0213.variants(ord(unicode))
                 # print([jis, unicode, variants])
                 if len(variants) > 1:
                     has_variants += 1
@@ -41,7 +41,7 @@ class JISTest(unittest.TestCase):
     def test_plane2(self):
         with open('bdf/jiskan24-2000-2.bdf', 'rb') as f:
             bdf = reader.read_bdf(f)
-        cconv = charset.JIS(2)
+        cconv = jisx0213.JISX0213(2)
 
         unmapped = 0
         unicode_to_jis = {}
@@ -52,7 +52,7 @@ class JISTest(unittest.TestCase):
             else:
                 self.assertEqual(1, len(unicode))
                 u = ord(unicode)
-                variants = charset.variants(u)
+                variants = jisx0213.variants(u)
                 self.assertEqual(1, len(variants))
                 if u in unicode_to_jis:
                     self.assertEqual(jis, unicode_to_jis[u], 'conflict mapping for U+%04X' % u)
@@ -62,6 +62,6 @@ class JISTest(unittest.TestCase):
         self.assertEqual(len(unicode_to_jis), 2436)
 
     def test_decompose(self):
-        cconv = charset.JIS(1)
+        cconv = jisx0213.JISX0213(1)
         self.assertEqual('jis1-04-11 u309A', cconv.decompose('\u304b\u309a'))
         self.assertEqual('jis1-11-64 jis1-11-68', cconv.decompose('\u02e5\u02e9'))

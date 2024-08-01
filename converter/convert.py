@@ -6,8 +6,8 @@ import sys
 import defcon
 from ufo2ft import compileTTF, compileOTF
 
-import charset
-from font import Font
+import jisx0213
+from jiskan24 import Jiskan24
 
 
 def draw(glyph, ufo_glyph, smooth=True):
@@ -56,7 +56,7 @@ def create_ufo(fonts, limit=None):
             ufo_glyph = ufo.newGlyph(g.name())
 
             if len(g.unicode) == 1:
-                ufo_glyph.unicodes = charset.variants(ord(g.unicode))
+                ufo_glyph.unicodes = jisx0213.variants(ord(g.unicode))
             else:
                 glyph_seq = font.codeconv.decompose(g.unicode)
                 liga_feature.append(' sub %s by %s;' % (glyph_seq, g.name()))
@@ -163,7 +163,7 @@ if __name__ == '__main__':
     parser.add_argument('bdf', help='input bdf file', nargs='+')
     args = parser.parse_args()
 
-    fonts = [Font(bdf) for bdf in args.bdf]
+    fonts = [Jiskan24(bdf) for bdf in args.bdf]
     ufo = create_ufo(fonts, limit=args.limit)
     if args.style == 'h2x':
         h2x(ufo)

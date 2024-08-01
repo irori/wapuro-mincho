@@ -2,7 +2,7 @@ import argparse
 import codecs
 import sys
 
-from font import Font
+from jiskan24 import Jiskan24
 
 
 def svg_path(glyph, smooth=True):
@@ -44,5 +44,5 @@ if __name__ == '__main__':
     parser.add_argument('bdf', help='input bdf file')
     args = parser.parse_args()
 
-    font = Font(args.bdf)
+    font = Jiskan24(args.bdf)
     generate_svg(font, limit=args.limit)

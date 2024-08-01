@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from font import Font
+from jiskan24 import Jiskan24
 import convert
 
 
@@ -22,7 +22,7 @@ class ConverterTest(unittest.TestCase):
             (0x411, 4, u'ワープロ明朝'),
         ]
 
-        font = Font('bdf/jiskan24-2003-1.bdf')
+        font = Jiskan24('bdf/jiskan24-2003-1.bdf')
         ufo = convert.create_ufo([font], limit=1)
         otf = convert.compile(ufo, 'out.ttf')
         actual = []
@@ -51,7 +51,7 @@ class ConverterTest(unittest.TestCase):
             (0x411, 17, u'横倍角'),
         ]
 
-        font = Font('bdf/jiskan24-2003-1.bdf')
+        font = Jiskan24('bdf/jiskan24-2003-1.bdf')
         ufo = convert.create_ufo([font], limit=1)
         convert.h2x(ufo)
         otf = convert.compile(ufo, 'out.ttf')
@@ -81,7 +81,7 @@ class ConverterTest(unittest.TestCase):
             (0x411, 17, u'縦倍角'),
         ]
 
-        font = Font('bdf/jiskan24-2003-1.bdf')
+        font = Jiskan24('bdf/jiskan24-2003-1.bdf')
         ufo = convert.create_ufo([font], limit=1)
         convert.v2x(ufo)
         otf = convert.compile(ufo, 'out.ttf')

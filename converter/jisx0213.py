@@ -2,7 +2,7 @@ import codecs
 import re
 
 
-class JIS:
+class JISX0213:
     def __init__(self, plane):
         if plane not in (1, 2):
             raise ValueError('Invalid JIS plane %d' % plane)
@@ -42,7 +42,7 @@ class JIS:
 
 def codeconv(charset_registry, charset_encoding):
     if re.match(r'JISX\d+(\.\d+)?', charset_registry, flags=re.IGNORECASE):
-        return JIS(int(charset_encoding))
+        return JISX0213(int(charset_encoding))
     raise ValueError('Unsupported encoding "%s"' % charset_registry)
 
 
