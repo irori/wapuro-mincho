@@ -18,31 +18,29 @@ def svg_path(glyph, smooth=True):
     return ' '.join(s)
 
 
-def generate_svg(font, limit=None):
-    sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
-
-    print '<?xml version="1.0"?>'
-    print '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >'
-    print '<svg xmlns="http://www.w3.org/2000/svg">'
-    print '<defs>'
-    print '<font id="wordpro" horiz-adv-x="%d">' % font.width
-    print '<font-face font-family="wordpro" units-per-em="%d" ascent="%d" descent="%d"/>' % (font.width, font.ascent, font.descent)
+def generate_svg(jiskan, limit=None):
+    print('<?xml version="1.0"?>')
+    print('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >')
+    print('<svg xmlns="http://www.w3.org/2000/svg">')
+    print('<defs>')
+    print('<font id="wordpro" horiz-adv-x="%d">' % jiskan.width)
+    print('<font-face font-family="wordpro" units-per-em="%d" ascent="%d" descent="%d"/>' % (jiskan.width, jiskan.ascent, jiskan.descent))
 
     count = 0
-    for g in font.glyphs():
-        print '<glyph unicode="%s" d="%s"/>' % (g.unicode, svg_path(g))
+    for g in jiskan.glyphs():
+        print('<glyph unicode="%s" d="%s"/>' % (g.unicode, svg_path(g)))
         count += 1
         if limit and count >= limit:
             break
 
-    print '</font></defs></svg>'
+    print('</font></defs></svg>')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--limit', metavar='N', type=int, help='limit number of glyphs to convert')
-    parser.add_argument('bdf', help='input bdf file')
+    parser.add_argument('bdf', help='input bdf file', nargs='+')
     args = parser.parse_args()
 
-    font = Jiskan24(args.bdf)
-    generate_svg(font, limit=args.limit)
+    jiskan = Jiskan24(args.bdf)
+    generate_svg(jiskan, limit=args.limit)
