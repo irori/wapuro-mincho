@@ -9,7 +9,7 @@ class JISX0213Test(unittest.TestCase):
     def test_plane1(self):
         with open('bdf/jiskan24-2003-1.bdf', 'rb') as f:
             bdf = reader.read_bdf(f)
-        cconv = jisx0213.JISX0213(1)
+        cconv = jisx0213.JISX0213()
 
         unmapped = 0
         single_cp = 0
@@ -41,12 +41,12 @@ class JISX0213Test(unittest.TestCase):
     def test_plane2(self):
         with open('bdf/jiskan24-2000-2.bdf', 'rb') as f:
             bdf = reader.read_bdf(f)
-        cconv = jisx0213.JISX0213(2)
+        cconv = jisx0213.JISX0213()
 
         unmapped = 0
         unicode_to_jis = {}
         for jis in bdf.codepoints():
-            unicode = cconv.unicode(jis)
+            unicode = cconv.unicode(jis + 0x8080)
             if unicode is None:
                 unmapped += 1
             else:
@@ -62,6 +62,6 @@ class JISX0213Test(unittest.TestCase):
         self.assertEqual(len(unicode_to_jis), 2436)
 
     def test_decompose(self):
-        cconv = jisx0213.JISX0213(1)
+        cconv = jisx0213.JISX0213()
         self.assertEqual('jis1-04-11 u309A', cconv.decompose('\u304b\u309a'))
         self.assertEqual('jis1-11-64 jis1-11-68', cconv.decompose('\u02e5\u02e9'))

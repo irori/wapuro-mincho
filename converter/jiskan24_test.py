@@ -4,11 +4,12 @@ import defcon
 
 from jiskan24 import Jiskan24
 
+JISX2013_CHARACTER_COUNT = 11233
 
 class Jiskan24Test(unittest.TestCase):
 
     def test_ufo_metrics(self):
-        f = Jiskan24('bdf/jiskan24-2003-1.bdf')
+        f = Jiskan24(['bdf/jiskan24-2003-1.bdf'])
         info = defcon.Info()
         f.set_ufo_metrics(info)
         self.assertEqual(info.unitsPerEm, 256)
@@ -18,7 +19,7 @@ class Jiskan24Test(unittest.TestCase):
         self.assertEqual(info.xHeight, 140)
 
     def test_vectorize(self):
-        f = Jiskan24('bdf/jiskan24-2003-1.bdf')
+        f = Jiskan24(['bdf/jiskan24-2003-1.bdf'])
 
         em_dash = f.glyph(0x213d)
         paths = em_dash.vectorize()
@@ -27,6 +28,11 @@ class Jiskan24Test(unittest.TestCase):
         v_em_dash = em_dash.vertical_variant()
         paths = v_em_dash.vectorize()
         self.assertEqual(paths, [[(118, -28), (128, -28), (128, 228), (118, 228)]])
+
+    def test_glyphs(self):
+        f = Jiskan24(['bdf/jiskan24-2003-1.bdf', 'bdf/jiskan24-2000-2.bdf'])
+        glyphs = list(f.glyphs())
+        self.assertEqual(len(glyphs), JISX2013_CHARACTER_COUNT)
 
 
 if __name__ == '__main__':

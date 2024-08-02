@@ -2,7 +2,7 @@ import sys
 
 from bdflib import reader
 
-from jisx0213 import codeconv
+from jisx0213 import JISX0213
 from smoother import Smoother, SCALE
 from vertical import vertical_glyph
 
@@ -19,8 +19,6 @@ class Glyph:
         return 'jis' + self.bdf_glyph.name.decode('ascii')
 
     def vertical_variant(self):
-        if self.font.plane != 1:
-            return None
         vg = vertical_glyph(self.bdf_glyph)
         if vg is None:
             return None
@@ -70,20 +68,35 @@ class Glyph:
 
 
 class Jiskan24:
-    def __init__(self, bdf_filename):
-        with open(bdf_filename, 'rb') as f:
+    def __init__(self, bdf_filenames):
+        with open(bdf_filenames[0], 'rb') as f:
             self.bdf = reader.read_bdf(f)
-        self.codeconv = codeconv(self.bdf[b'CHARSET_REGISTRY'].decode('ascii'),
-                                 self.bdf[b'CHARSET_ENCODING'].decode('ascii'))
-        self.plane = int(self.bdf[b'CHARSET_ENCODING'])
+            if self.bdf[b'CHARSET_ENCODING'] != b'1':
+                raise ValueError('Primary BDF is not JIS X 0213 plane 1')
+        for filename in bdf_filenames[1:]:
+            with open(filename, 'rb') as f:
+                bdf = reader.read_bdf(f)
+                plane = int(bdf[b'CHARSET_ENCODING'])
+                cp_offset = (plane - 1) * 0x8080
+                for g in bdf.glyphs:
+                    self.bdf.new_glyph_from_data(
+                        g.name,
+                        g.data,
+                        g.bbX,
+                        g.bbY,
+                        g.bbW,
+                        g.bbH,
+                        g.advance,
+                        g.codepoint + cp_offset)
+
+        self.codeconv = JISX0213()
         self.width = self.bdf[self.bdf[b'DEFAULT_CHAR']].bbW * SCALE + MARGIN * 2
         self.ascent = self.bdf[b'FONT_ASCENT'] * SCALE + MARGIN
         self.descent = -self.bdf[b'FONT_DESCENT'] * SCALE - MARGIN
 
         # For some reasons, IDEOGRAPHIC SPACE in jiskan24-2003-1.bdf is not
         # really a whitespace. Overwrite it.
-        if self.plane == 1:
-            self.bdf[0x2121].data = map(lambda _: 0, self.bdf[0x2121].data)
+        self.bdf[0x2121].data = map(lambda _: 0, self.bdf[0x2121].data)
 
     def set_ufo_metrics(self, info):
         info.unitsPerEm = self.width

@@ -29,7 +29,7 @@ def japanese_name_record(nameID, string):
     }
 
 
-def create_ufo(fonts, limit=None):
+def create_ufo(jiskan, limit=None):
     ufo = defcon.Font()
 
     ufo.info.familyName = 'Wapuro Mincho'
@@ -45,42 +45,41 @@ def create_ufo(fonts, limit=None):
     ]
     ufo.info.openTypeOS2Type = []  # installable
 
-    fonts[0].set_ufo_metrics(ufo.info)
+    jiskan.set_ufo_metrics(ufo.info)
 
     vert_feature = []
     liga_feature = []
 
     count = 0
-    for font in fonts:
-        for g in font.glyphs():
-            ufo_glyph = ufo.newGlyph(g.name())
+    for g in jiskan.glyphs():
+        ufo_glyph = ufo.newGlyph(g.name())
 
-            if len(g.unicode) == 1:
-                ufo_glyph.unicodes = jisx0213.variants(ord(g.unicode))
-            else:
-                glyph_seq = font.codeconv.decompose(g.unicode)
-                liga_feature.append(' sub %s by %s;' % (glyph_seq, g.name()))
+        if len(g.unicode) == 1:
+            ufo_glyph.unicodes = jisx0213.variants(ord(g.unicode))
+        else:
+            glyph_seq = jiskan.codeconv.decompose(g.unicode)
+            liga_feature.append(' sub %s by %s;' % (glyph_seq, g.name()))
 
-            ufo_glyph.width = font.width
-            ufo_glyph.height = font.ascent - font.descent
-            draw(g, ufo_glyph)
+        ufo_glyph.width = jiskan.width
+        ufo_glyph.height = jiskan.ascent - jiskan.descent
+        draw(g, ufo_glyph)
 
-            vg = g.vertical_variant()
-            if vg is not None:
-                ufo_vglyph = ufo.newGlyph(vg.name())
-                ufo_vglyph.width = font.width
-                ufo_vglyph.height = font.ascent - font.descent
-                draw(vg, ufo_vglyph)
-                vert_feature.append(' sub %s by %s;' % (g.name(), vg.name()))
+        vg = g.vertical_variant()
+        if vg is not None:
+            ufo_vglyph = ufo.newGlyph(vg.name())
+            ufo_vglyph.width = jiskan.width
+            ufo_vglyph.height = jiskan.ascent - jiskan.descent
+            draw(vg, ufo_vglyph)
+            vert_feature.append(' sub %s by %s;' % (g.name(), vg.name()))
 
-            if g.unicode == '\u309c':  # KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK
-                # Add COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK which is used in ligatures.
-                u309a = ufo.insertGlyph(ufo_glyph, 'u309A')
-                u309a.unicode = 0x309a
+        if g.unicode == '\u309c':  # KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK
+            # Add COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK which is used in ligatures.
+            u309a = ufo.insertGlyph(ufo_glyph, 'u309A')
+            u309a.unicode = 0x309a
 
-            count += 1
-            if limit and count >= limit:
-                break
+        count += 1
+        if limit and count >= limit:
+            break
 
     features = ''
     if len(vert_feature) > 0:
@@ -163,8 +162,8 @@ if __name__ == '__main__':
     parser.add_argument('bdf', help='input bdf file', nargs='+')
     args = parser.parse_args()
 
-    fonts = [Jiskan24(bdf) for bdf in args.bdf]
-    ufo = create_ufo(fonts, limit=args.limit)
+    jiskan = Jiskan24(args.bdf)
+    ufo = create_ufo(jiskan, limit=args.limit)
     if args.style == 'h2x':
         h2x(ufo)
     elif args.style == 'v2x':

@@ -22,8 +22,8 @@ class ConverterTest(unittest.TestCase):
             (0x411, 4, u'ワープロ明朝'),
         ]
 
-        font = Jiskan24('bdf/jiskan24-2003-1.bdf')
-        ufo = convert.create_ufo([font], limit=1)
+        jiskan = Jiskan24(['bdf/jiskan24-2003-1.bdf'])
+        ufo = convert.create_ufo(jiskan, limit=1)
         otf = convert.compile(ufo, 'out.ttf')
         actual = []
         for name in sorted(otf['name'].names):
@@ -51,8 +51,8 @@ class ConverterTest(unittest.TestCase):
             (0x411, 17, u'横倍角'),
         ]
 
-        font = Jiskan24('bdf/jiskan24-2003-1.bdf')
-        ufo = convert.create_ufo([font], limit=1)
+        jiskan = Jiskan24(['bdf/jiskan24-2003-1.bdf'])
+        ufo = convert.create_ufo(jiskan, limit=1)
         convert.h2x(ufo)
         otf = convert.compile(ufo, 'out.ttf')
         actual = []
@@ -81,8 +81,8 @@ class ConverterTest(unittest.TestCase):
             (0x411, 17, u'縦倍角'),
         ]
 
-        font = Jiskan24('bdf/jiskan24-2003-1.bdf')
-        ufo = convert.create_ufo([font], limit=1)
+        jiskan = Jiskan24(['bdf/jiskan24-2003-1.bdf'])
+        ufo = convert.create_ufo(jiskan, limit=1)
         convert.v2x(ufo)
         otf = convert.compile(ufo, 'out.ttf')
         actual = []

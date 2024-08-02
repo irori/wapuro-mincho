@@ -3,24 +3,28 @@ import re
 
 
 class JISX0213:
-    def __init__(self, plane):
-        if plane not in (1, 2):
-            raise ValueError('Invalid JIS plane %d' % plane)
-        self.plane = plane
+    def __init__(self):
         self.decoder = codecs.getdecoder('euc_jis_2004')
         self.encoder = codecs.getencoder('euc_jis_2004')
 
     def unicode(self, cp):
+        """
+        Returns the Unicode codepoint for the given JIS X 0213 codepoint.
+
+        :param cp: JIS X 0213 codepoint. GL for plane 1, GR for plane 2.
+        """
         # Convert JIS to EUC-JIS-2004 and then Unicode
-        high = (cp >> 8) + 0x80
-        low = (cp & 0xff) + 0x80
-        if high > 0xff or low > 0xff:
+        if cp < 0 or cp > 0xffff:
+            return None
+        high = (cp >> 8) | 0x80
+        low = (cp & 0x7f) | 0x80
+        if cp & 0x8080 == 0:
+            euc = (high, low)
+        elif cp & 0x8080 == 0x8080:
+            euc = (0x8f, high, low)
+        else:
             return None
         try:
-            if self.plane == 2:
-                euc = (0x8f, high, low)
-            else:
-                euc = (high, low)
             ustr, n = self.decoder(bytearray(euc))
             return ustr
         except UnicodeDecodeError:
@@ -38,12 +42,6 @@ class JISX0213:
             except UnicodeEncodeError:
                 names.append(f'u{ord(u):04X}')
         return ' '.join(names)
-
-
-def codeconv(charset_registry, charset_encoding):
-    if re.match(r'JISX\d+(\.\d+)?', charset_registry, flags=re.IGNORECASE):
-        return JISX0213(int(charset_encoding))
-    raise ValueError('Unsupported encoding "%s"' % charset_registry)
 
 
 _variants_table = {}
