@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import sys
 from bdflib import model, reader, writer
 
@@ -128,11 +129,10 @@ def _translate(data, dxdy):
 
 
 if __name__ == '__main__':
-    with open(sys.argv[1]) as f:
+    with open(sys.argv[1], 'rb') as f:
         bdf = reader.read_bdf(f)
 
-    out = model.Font('vertical', bdf['POINT_SIZE'],
-                     bdf['RESOLUTION_X'], bdf['RESOLUTION_Y'])
+    out = model.Font(b'vertical', bdf.ptSize, bdf.xdpi, bdf.ydpi)
 
     for cp in bdf.codepoints():
         vg = vertical_glyph(bdf[cp])
@@ -141,4 +141,5 @@ if __name__ == '__main__':
         out.glyphs.append(vg)
         out.glyphs_by_codepoint[cp] = vg
 
-    writer.write_bdf(out, sys.stdout)
+    with os.fdopen(sys.stdout.fileno(), 'wb', closefd=False) as stdout:
+        writer.write_bdf(out, stdout)
