@@ -6,7 +6,7 @@
 
 # Directories
 - `bdf` : Contains the base bitmap font (Jiskan24).
-- `converter` : Contains a script that generates smoothed outline fonts from bitmap fonts.
+- `src` : Contains a script that generates smoothed outline fonts from bitmap fonts.
 - `dist` : Generated fonts are placed in this directory.
 - `site` : Source code of the [web site](https://irori.github.io/wapuro-mincho/).
 
@@ -22,4 +22,4 @@ pip install -r requirements.txt
 
 # License
 - The font files in the `bdf` and `dist` directories are public domain.
-- The script files in `converter` directory are governed by the [MIT license](LICENSE).
+- The script files in `src` directory are governed by the [MIT license](LICENSE).

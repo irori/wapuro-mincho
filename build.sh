@@ -1,5 +1,5 @@
 #!/bin/sh
-convert="python converter/convert.py"
+convert="python src/convert.py"
 source="bdf/jiskan24-2003-1.bdf bdf/jiskan24-2000-2.bdf"
 
 for ext in $*
