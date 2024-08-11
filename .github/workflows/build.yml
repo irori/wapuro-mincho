@@ -27,6 +27,7 @@ jobs:
         ./build.sh otf woff2
         cp dist/*.woff2 site/
         pyftsubset dist/wapuro-mincho.woff2 --text-file=site/index.html --output-file=site/wapuro-mincho.subset.woff2 --flavor=woff2
+        python src/catalog.py >site/catalog.html
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4

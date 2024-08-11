@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ワープロ明朝 収録文字一覧</title>
+  <style>
+    body {
+      background-color: #fafafa;
+      max-width: 640px;
+      margin: 0 auto 10rem;
+    }
+    @font-face {
+      font-family: "ワープロ明朝";
+      src: url("wapuro-mincho.woff2") format("woff2");
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 2rem;
+    }
+    th {
+      border: solid 1px;
+      background-color: #eee;
+      &.plane {
+        width: 2em;
+      }
+      &.row {
+        width: 2em;
+      }
+      &.col {
+        width: 2em;
+      }
+    }
+    td {
+      font-family: "ワープロ明朝";
+      font-size: 24px;
+      width: 2em;
+      height: 2em;
+      text-align: center;
+      border: solid 1px;
+      &.blank {
+        background-color: #ddd;
+      }
+    }
+    #popup {
+      border: 1px solid #000;
+      background-color: #fff;
+      position: absolute;
+      display: none;
+      &.show {
+        display: block;
+      }
+    }
+    #popup-glyph {
+      font-family: "ワープロ明朝";
+      font-size: 120px;
+      width: 10rem;
+      height: 10rem;
+      line-height: 10rem;
+      text-align: center;
+    }
+    .popup-info {
+      margin-left: 0.5rem;
+    }
+    #copy-button {
+      position: absolute;
+      right: 0.5rem;
+      top: 9.3rem;
+      background-color: #fff;
+      border: none;
+      #copy-icon {
+        color: #33f;
+      }
+      #copied-icon {
+        color: #ccc;
+      }
+    }
+
+    .tooltip {
+      position: relative;
+      cursor: pointer;
+    }
+    .tooltip-text {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -30px;
+      display: inline-block;
+      padding: 5px;
+      white-space: nowrap;
+      font-size: 0.8rem;
+      line-height: 1.3;
+      background: #333;
+      color: #fff;
+      border-radius: 3px;
+      transition: 0.3s ease-in;
+    }
+    .tooltip:hover .tooltip-text {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+<body>
+  <h1>ワープロ明朝 収録文字一覧</h1>
+  <p><a href="index.html">トップページへ戻る</a></p>
+  {% for tbl in char_table %}
+    <table>
+      <tr>
+        <th scope="col">面</th>
+        <th scope="col">区</th>
+        <th scope="col">点</th>
+        {% for i in range(10) %}
+          <th scope="col">{{ i }}</th>
+        {% endfor %}
+      </tr>
+      {% for y in range(10) %}
+        <tr>
+          {% if y == 0 %}
+            <th scope="row" rowspan="10" class="plane">{{ tbl.plane }}</th>
+            <th scope="row" rowspan="10" class="row">{{ tbl.row }}</th>
+          {% endif %}
+          <th scope="row" class="col">{{ y }}0</th>
+          {% for x in range(10) %}
+            {% if tbl.table[y * 10 + x] is none %}
+              <td class="blank"></td>
+            {% else %}
+              <td data-jis="{{ tbl.plane }}-{{ tbl.row }}-{{ y * 10 + x }}">{{ tbl.table[y * 10 + x] }}</td>
+            {% endif %}
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+  {% endfor %}
+  <div id="popup">
+    <div id="popup-glyph"></div>
+    <button id="copy-button" class="tooltip">
+      <span id="copy-icon">
+        <span class="tooltip-text">コピー</span>
+        <!-- https://tabler.io/icons/icon/clipboard -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+          <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+        </svg>
+      </span>
+      <span id="copied-icon" hidden>
+        <span class="tooltip-text">コピーしました</span>
+        <!-- https://tabler.io/icons/icon/clipboard-check -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard-check">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+          <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+          <path d="M9 14l2 2l4 -4" />
+        </svg>
+      </span>
+    </button>
+    <div class="popup-info">JIS: <span id="popup-info-jis"></span></div>
+    <div class="popup-info">Unicode: <span id="popup-info-unicode"></span></div>
+  </div>
+  <script src="catalog.js" async></script>
+</body>
+</html>

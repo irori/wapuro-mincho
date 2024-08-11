@@ -2,3 +2,4 @@
 .venv/
 dist/*.otf
 dist/*.woff2
+site/catalog.html
