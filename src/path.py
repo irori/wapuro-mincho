@@ -18,15 +18,15 @@ class PathBuilder:
             for p2 in list(self._segments[p1]):
                 while p2:
                     s2 = self._segments[p2]
-                    p3 = [p3 for p3 in s2 if is_straight(p1, p2, p3)]
+                    p3 = next((p3 for p3 in s2 if collinear(p1, p2, p3)), None)
 
                     if p3:
-                        self._segments[p1].add(p3[0])
+                        self._segments[p1].add(p3)
                         self._segments[p1].remove(p2)
-                        s2.remove(p3[0])
+                        s2.remove(p3)
                         if not s2:
                             del self._segments[p2]
-                        p2 = p3[0]
+                        p2 = p3
                     else:
                         p2 = None
 
@@ -58,10 +58,8 @@ class Pen:
         self.pb.add_segment(self.current, (x, y))
         self.current = (x, y)
 
-
-def is_straight(p1, p2, p3):
+def collinear(p1, p2, p3):
     (x1, y1) = p1
     (x2, y2) = p2
     (x3, y3) = p3
-    return ((x1 == x2 == x3 or x1 < x2 < x3 or x1 > x2 > x3) and
-            (y1 == y2 == y3 or y1 < y2 < y3 or y1 > y2 > y3))
+    return (y1 - y2) * (x1 - x3) == (y1 - y3) * (x1 - x2)
