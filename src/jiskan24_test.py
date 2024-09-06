@@ -12,22 +12,22 @@ class Jiskan24Test(unittest.TestCase):
         f = Jiskan24(['bdf/jiskan24-2003-1.bdf'])
         info = defcon.Info()
         f.set_ufo_metrics(info)
-        self.assertEqual(info.unitsPerEm, 256)
-        self.assertEqual(info.ascender, 228)
-        self.assertEqual(info.descender, -28)
-        self.assertEqual(info.capHeight, 200)
-        self.assertEqual(info.xHeight, 140)
+        self.assertEqual(info.unitsPerEm, 1000)
+        self.assertEqual(info.ascender, 880)
+        self.assertEqual(info.descender, -120)
+        self.assertEqual(info.capHeight, 760)
+        self.assertEqual(info.xHeight, 532)
 
     def test_vectorize(self):
         f = Jiskan24(['bdf/jiskan24-2003-1.bdf'])
 
         em_dash = f.glyph(0x213d)
         paths = em_dash.vectorize()
-        self.assertEqual(paths, [[(0, 90), (256, 90), (256, 100), (0, 100)]])
+        self.assertEqual(paths, [[(0, 342), (1000, 342), (1000, 380), (0, 380)]])
 
         v_em_dash = em_dash.vertical_variant()
         paths = v_em_dash.vectorize()
-        self.assertEqual(paths, [[(118, -28), (128, -28), (128, 228), (118, 228)]])
+        self.assertEqual(paths, [[(462, -120), (500, -120), (500, 880), (462, 880)]])
 
     def test_glyphs(self):
         f = Jiskan24(['bdf/jiskan24-2003-1.bdf', 'bdf/jiskan24-2000-2.bdf'])

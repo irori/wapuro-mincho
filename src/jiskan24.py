@@ -6,7 +6,7 @@ from jisx0213 import JISX0213
 from smoother import Smoother, SCALE
 from vertical import vertical_glyph
 
-MARGIN = 8
+MARGIN = 44
 
 class Glyph:
 

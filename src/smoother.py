@@ -1,12 +1,19 @@
 from path import PathBuilder, Pen
 
-SCALE = 10
+SCALE = 38
 
 BLACK = 1
 NW = 2 << 0
 NE = 2 << 1
 SE = 2 << 2
 SW = 2 << 3
+
+C3 = 12
+C5 = SCALE // 2
+C2 = C5 - C3
+C7 = SCALE - C3
+C8 = SCALE - C2
+C10 = SCALE
 
 class Smoother:
 
@@ -74,76 +81,76 @@ class Smoother:
             for x in range(self.width):
                 n = self._bmp[y][x]
                 if n & BLACK:
-                    self._draw_black(pb, x*10 + ox, y*10 + oy, n)
+                    self._draw_black(pb, x*SCALE + ox, y*SCALE + oy, n)
                 else:
-                    self._draw_white(pb, x*10 + ox, y*10 + oy, n)
+                    self._draw_white(pb, x*SCALE + ox, y*SCALE + oy, n)
         pb.optimize()
         return pb.generate_paths()
 
     def _draw_black(self, pb, x, y, n):
         pen = Pen(pb)
-        pen.move_to(x + 3, y)
-        pen.line_to(x + 7, y)
+        pen.move_to(x + C3, y)
+        pen.line_to(x + C7, y)
         if not n & NE:
-            pen.line_to(x + 10, y)
-        pen.line_to(x + 10, y + 3)
-        pen.line_to(x + 10, y + 7)
+            pen.line_to(x + C10, y)
+        pen.line_to(x + C10, y + C3)
+        pen.line_to(x + C10, y + C7)
         if not n & SE:
-            pen.line_to(x + 10, y + 10)
-        pen.line_to(x + 7, y + 10)
-        pen.line_to(x + 3, y + 10)
+            pen.line_to(x + C10, y + C10)
+        pen.line_to(x + C7, y + C10)
+        pen.line_to(x + C3, y + C10)
         if not n & SW:
-            pen.line_to(x, y + 10)
-        pen.line_to(x, y + 7)
-        pen.line_to(x, y + 3)
+            pen.line_to(x, y + C10)
+        pen.line_to(x, y + C7)
+        pen.line_to(x, y + C3)
         if not n & NW:
             pen.line_to(x, y)
-        pen.line_to(x + 3, y)
+        pen.line_to(x + C3, y)
 
     def _draw_white(self, pb, x, y, n):
         def draw(x1, y1, x2, y2):
             pb.add_segment((x + x1, y + y1), (x + x2, y + y2))
 
         if n & NW:
-            draw(0,3, 0,0)
-            draw(0,0, 3,0)
+            draw(0,C3, 0,0)
+            draw(0,0, C3,0)
             if not n & NE:
-                draw(7,0, 5,2)
-            draw(5,2, 2,5)
+                draw(C7,0, C5,C2)
+            draw(C5,C2, C2,C5)
             if not n & SW:
-                draw(2,5, 0,7)
+                draw(C2,C5, 0,C7)
         if n & NE:
-            draw(7,0, 10,0)
-            draw(10,0, 10,3)
+            draw(C7,0, C10,0)
+            draw(C10,0, C10,C3)
             if not n & SE:
-                draw(10,7, 8,5)
-            draw(8,5, 5,2)
+                draw(C10,C7, C8,C5)
+            draw(C8,C5, C5,C2)
             if not n & NW:
-                draw(5,2, 3,0)
+                draw(C5,C2, C3,0)
         if n & SE:
-            draw(10,7, 10,10)
-            draw(10,10, 7,10)
+            draw(C10,C7, C10,C10)
+            draw(C10,C10, C7,C10)
             if not n & SW:
-                draw(3,10, 5,8)
-            draw(5,8, 8,5)
+                draw(C3,C10, C5,C8)
+            draw(C5,C8, C8,C5)
             if not n & NE:
-                draw(8,5, 10,3)
+                draw(C8,C5, C10,C3)
         if n & SW:
-            draw(3,10, 0,10)
-            draw(0,10, 0,7)
+            draw(C3,C10, 0,C10)
+            draw(0,C10, 0,C7)
             if not n & NW:
-                draw(0,3, 2,5)
-            draw(2,5, 5,8)
+                draw(0,C3, C2,C5)
+            draw(C2,C5, C5,C8)
             if not n & SE:
-                draw(5,8, 7,10)
+                draw(C5,C8, C7,C10)
         if n & (NW | NE):
-            draw(3,0, 7,0)
+            draw(C3,0, C7,0)
         if n & (NE | SE):
-            draw(10,3, 10,7)
+            draw(C10,C3, C10,C7)
         if n & (SE | SW):
-            draw(7,10, 3,10)
+            draw(C7,C10, C3,C10)
         if n & (SW | NW):
-            draw(0,7, 0,3)
+            draw(0,C7, 0,C3)
 
 
 def shift(pos, delta):

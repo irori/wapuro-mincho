@@ -36,10 +36,10 @@ class SmootherTest(unittest.TestCase):
     def test_draw_black(self):
         s = Smoother([[0]])
         pb = PathBuilder()
-        s._draw_black(pb, 20, 30, BLACK)
+        s._draw_black(pb, 100, 200, BLACK)
         pb.optimize()
         self.assertEqual(pb.generate_paths(),
-                         [[(20, 30), (30, 30), (30, 40), (20, 40)]])
+                         [[(100, 200), (138, 200), (138, 238), (100, 238)]])
 
     def test_draw_black2(self):
         s = Smoother([[0]])
@@ -47,16 +47,16 @@ class SmootherTest(unittest.TestCase):
         s._draw_black(pb, 0, 0, BLACK | NW | NE | SE | SW)
         pb.optimize()
         self.assertEqual(pb.generate_paths(),
-                         [[(0, 3), (3, 0), (7, 0), (10, 3),
-                           (10, 7), (7, 10), (3, 10), (0, 7)]])
+                         [[(0, 12), (12, 0), (26, 0), (38, 12),
+                           (38, 26), (26, 38), (12, 38), (0, 26)]])
 
     def test_draw_white(self):
         s = Smoother([[0]])
         pb = PathBuilder()
-        s._draw_white(pb, 20, 30, NW)
+        s._draw_white(pb, 100, 200, NW)
         pb.optimize()
         self.assertEqual(pb.generate_paths(),
-                         [[(20, 30), (27, 30), (20, 37)]])
+                         [[(100, 200), (126, 200), (100, 226)]])
 
     def test_draw_white2(self):
         s = Smoother([[0]])
@@ -64,20 +64,20 @@ class SmootherTest(unittest.TestCase):
         s._draw_white(pb, 0, 0, NW | NE | SE | SW)
         pb.optimize()
         self.assertEqual(pb.generate_paths(),
-                         [[(0, 0), (10, 0), (10, 10), (0, 10)],
-                          [(2, 5), (5, 8), (8, 5), (5, 2)]])
+                         [[(0, 0), (38, 0), (38, 38), (0, 38)],
+                          [(7, 19), (19, 31), (31, 19), (19, 7)]])
 
     def test_vectorize(self):
         s = Smoother([[0, 1], [1, 0]])
         s.smooth()
         self.assertEqual(s.vectorize(),
-                         [[(0, 13), (13, 0), (20, 0), (20, 7), (7, 20), (0, 20)]])
+                         [[(0, 50), (50, 0), (76, 0), (76, 26), (26, 76), (0, 76)]])
 
     def test_vectorize_origin(self):
         s = Smoother([[0, 1], [1, 0]])
         s.smooth()
-        self.assertEqual(s.vectorize(10, -10),
-                         [[(10, 3), (23, -10), (30, -10), (30, -3), (17, 10), (10, 10)]])
+        self.assertEqual(s.vectorize(100, -100),
+                         [[(100, -50), (150, -100), (176, -100), (176, -74), (126, -24), (100, -24)]])
 
 
 if __name__ == '__main__':
