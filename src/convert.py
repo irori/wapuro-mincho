@@ -134,24 +134,21 @@ def v2x(ufo):
 
 def compile(ufo, out_filename):
     ext = os.path.splitext(out_filename)[1]
-    if ext == '.ufo':
-        return ufo
 
-    otf = None
     if ext == '.ttf':
-        otf = compileTTF(ufo)
+        out = compileTTF(ufo)
     elif ext == '.otf':
-        otf = compileOTF(ufo)
+        out = compileOTF(ufo)
     elif ext == '.woff':
-        otf = compileOTF(ufo, optimizeCFF=False)
-        otf.flavor = 'woff'
+        out = compileOTF(ufo, optimizeCFF=False)
+        out.flavor = 'woff'
     elif ext == '.woff2':
-        otf = compileOTF(ufo, optimizeCFF=False)
-        otf.flavor = 'woff2'
+        out = compileOTF(ufo, optimizeCFF=False)
+        out.flavor = 'woff2'
     else:
         raise RuntimeError('Unknown output file type: %s' % ext)
 
-    return otf
+    return out
 
 
 if __name__ == '__main__':
@@ -162,11 +159,19 @@ if __name__ == '__main__':
     parser.add_argument('bdf', help='input bdf file', nargs='+')
     args = parser.parse_args()
 
-    jiskan = Jiskan24(args.bdf)
-    ufo = create_ufo(jiskan, limit=args.limit)
+    if len(args.bdf) == 1 and os.path.splitext(args.bdf[0])[1] == '.ufo':
+        ufo = defcon.Font(args.bdf[0])
+    else:
+        jiskan = Jiskan24(args.bdf)
+        ufo = create_ufo(jiskan, limit=args.limit)
+
     if args.style == 'h2x':
         h2x(ufo)
     elif args.style == 'v2x':
         v2x(ufo)
-    otf = compile(ufo, args.out)
-    otf.save(args.out)
+
+    if os.path.splitext(args.out)[1] == '.ufo':
+        ufo.save(args.out, structure='zip')
+    else:
+        out = compile(ufo, args.out)
+        out.save(args.out)
