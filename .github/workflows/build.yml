@@ -34,6 +34,7 @@ jobs:
       with:
         name: wapuro-mincho
         path: dist
+        compression-level: 9
 
     - name: Upload artifacts for GitHub Pages
       uses: actions/upload-pages-artifact@v3
