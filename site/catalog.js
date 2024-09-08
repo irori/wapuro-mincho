@@ -33,3 +33,7 @@ $('#copy-button').addEventListener('click', async (event) => {
     $('#copy-icon').hidden = true;
     $('#copied-icon').hidden = false;
 });
+
+$('#popup').addEventListener('click', async (event) => {
+    event.stopPropagation();
+});
