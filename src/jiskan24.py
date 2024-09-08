@@ -94,9 +94,10 @@ class Jiskan24:
         self.ascent = self.bdf[b'FONT_ASCENT'] * SCALE + MARGIN
         self.descent = -self.bdf[b'FONT_DESCENT'] * SCALE - MARGIN
 
-        # For some reasons, IDEOGRAPHIC SPACE in jiskan24-2003-1.bdf is not
-        # really a whitespace. Overwrite it.
+        # In jiskan24-2003-1.bdf, IDEOGRAPHIC SPACE and NBSP are not really a
+        # whitespace. Override them.
         self.bdf[0x2121].data = map(lambda _: 0, self.bdf[0x2121].data)
+        self.bdf[0x2922].data = map(lambda _: 0, self.bdf[0x2922].data)
 
     def set_ufo_metrics(self, info):
         info.unitsPerEm = self.width
