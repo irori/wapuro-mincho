@@ -36,7 +36,7 @@ class JISX0213Test(unittest.TestCase):
         self.assertEqual(unmapped, 39)
         self.assertEqual(single_cp, 8772)
         self.assertEqual(multi_cp, 25)
-        self.assertEqual(has_variants, 102)
+        self.assertEqual(has_variants, 104)
 
     def test_plane2(self):
         with open('bdf/jiskan24-2000-2.bdf', 'rb') as f:

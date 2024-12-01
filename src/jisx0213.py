@@ -52,6 +52,8 @@ def _add_variant(cps):
 _add_variant([0x3000, 0x20])  # IDEOGRAPHIC SPACE
 for i in range(0xff01, 0xff5f):
     _add_variant([i - 0xfee0, i])  # Fullwidth ASCII variants
+_add_variant([0xff5f, 0x2985])  # FULLWIDTH LEFT WHITE PARENTHESIS
+_add_variant([0xff60, 0x2986])  # FULLWIDTH RIGHT WHITE PARENTHESIS
 _add_variant([0xffe0, 0xa2])  # FULLWIDTH CENT SIGN
 _add_variant([0xffe1, 0xa3])  # FULLWIDTH POUND SIGN
 _add_variant([0xffe2, 0xac])  # FULLWIDTH NOT SIGN
